@@ -1,0 +1,14 @@
+Drake Framework - Zend Framework extension
+==========================================
+
+Drake Framework has been built with the goal of providing a common codebase
+for custom projects. It is not intended to deliver RAD or fast processing,
+but to provide additional utility.
+
+
+ROADMAP
+=======
+
+The library as it stands now in GitHub is largely incomplete. Some components
+have moved in a direction I dislike and would like to update them prior to
+making them open source.
