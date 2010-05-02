@@ -6,21 +6,20 @@
  * package in the file LICENSE.
  *
  * @category    Drake
- * @package     Drake_View
- * @subpackage  Helper
+ * @package     Drake_Filter
  * @copyright   Copyright (c) 2008-2010 Rob Zienert (http://robzienert.com)
  * @license     http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
 
 /**
- * Exception interface
+ * Runtime Exception
  *
  * @category    Drake
- * @package     Drake_View
- * @subpackage  Helper
+ * @package     Drake_Filter
  * @copyright   Copyright (c) 2008-2010 Rob Zienert (http://robzienert.com)
  * @license     http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-interface Drake_View_Helper_Exception extends Drake_Exception
+class Drake_Filter_RuntimeException extends RuntimeException
+    implements Drake_Filter_Exception
 {
 }

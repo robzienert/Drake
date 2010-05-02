@@ -13,14 +13,15 @@
  */
 
 /**
- * Exception interface
- *
+ * Runtime exception
+ * 
  * @category    Drake
  * @package     Drake_View
  * @subpackage  Helper
  * @copyright   Copyright (c) 2008-2010 Rob Zienert (http://robzienert.com)
  * @license     http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-interface Drake_View_Helper_Exception extends Drake_Exception
+class Drake_View_Helper_RuntimeException extends RuntimeException
+    implements Drake_View_Helper_Exception
 {
 }

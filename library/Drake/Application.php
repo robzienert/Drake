@@ -6,7 +6,7 @@
  * package in the file LICENSE.
  *
  * @category    Drake
- * @package     Drake_Domain
+ * @package     Drake_Application
  * @copyright   Copyright (c) 2008-2010 Rob Zienert (http://robzienert.com)
  * @license     http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
@@ -15,7 +15,7 @@
  * Needs documentation
  *
  * @category    Drake
- * @package     Drake_Domain
+ * @package     Drake_Application
  * @copyright   Copyright (c) 2008-2010 Rob Zienert (http://robzienert.com)
  * @license     http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
