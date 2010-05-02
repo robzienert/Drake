@@ -1,4 +1,24 @@
 <?php
+/**
+ * Drake Framework
+ *
+ * This source file is subject to the new BSD license that is bundled with this
+ * package in the file LICENSE.
+ *
+ * @category    Drake
+ * @package     Drake_Data
+ * @copyright   Copyright (c) 2008-2010 Rob Zienert (http://robzienert.com)
+ * @license     http://www.opensource.org/licenses/bsd-license.php New BSD License
+ */
+
+/**
+ * A class that maps integers (or a combination of them) to an array of values.
+ *
+ * @category    Drake
+ * @package     Drake_Data
+ * @copyright   Copyright (c) 2008-2010 Rob Zienert (http://robzienert.com)
+ * @license     http://www.opensource.org/licenses/bsd-license.php New BSD License
+ */
 class Drake_Data_BitBucket
 {
     /**
@@ -20,6 +40,8 @@ class Drake_Data_BitBucket
      * Constructor
      *
      * @param array $switches
+     * @throws Drake_Data_RuntimeException
+     * @return void
      */
     public function __construct(array $switches)
     {
@@ -38,6 +60,12 @@ class Drake_Data_BitBucket
         $this->_max = ($this->_max << 1) - 1;
     }
 
+    /**
+     * Normalize a string
+     *
+     * @param string $string
+     * @return string
+     */
     public function normalize($string)
     {
         return strtolower($string);
@@ -79,6 +107,7 @@ class Drake_Data_BitBucket
      * Returns the value of a given bit
      *
      * @param string|integer $value
+     * @throws Drake_Data_UnexpectedValueException
      * @return integer
      */
     public function getBit($value)
@@ -128,6 +157,7 @@ class Drake_Data_BitBucket
      * Compares two like-valued bitbuckets
      *
      * @param Drake_Data_BitBucket $bitBucket
+     * @throws Drake_Data_UnexpectedValueException
      * @return integer
      */
     public function compare(Drake_Data_BitBucket $bitBucket) {
@@ -258,7 +288,8 @@ class Drake_Data_BitBucket
      * Returns all switch values given a particular bucket value
      *
      * @param integer $value
-     * @return unknown_type
+     * @throws Drake_Data_InvalidArgumentException
+     * @return array
      */
     public function explode($value)
     {
@@ -307,7 +338,7 @@ class Drake_Data_BitBucket
 
     /**
      * Returns the bucket value as an array
-     * @return unknown_type
+     * @return array
      */
     public function __toArray()
     {
