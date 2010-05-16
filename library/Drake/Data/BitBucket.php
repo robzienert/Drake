@@ -14,6 +14,8 @@
 /**
  * A class that maps integers (or a combination of them) to an array of values.
  *
+ * Originally developed by Aaron van Kaam <http://cyberpunkrock.com>
+ *
  * @category    Drake
  * @package     Drake_Data
  * @copyright   Copyright (c) 2008-2010 Rob Zienert (http://robzienert.com)

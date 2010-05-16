@@ -1,9 +1,8 @@
-Drake Framework - Zend Framework extension
-==========================================
+Drake - Zend Framework extension
+================================
 
-Drake Framework has been built with the goal of providing a common codebase
-for custom projects. It is not intended to deliver RAD or fast processing,
-but to provide additional utility.
+Drake is a collection of Zend Framework extensions that provide me a common
+codebase for custom projects.
 
 ROADMAP
 =======
