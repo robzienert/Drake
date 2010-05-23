@@ -1,0 +1,31 @@
+<?php
+/**
+ * Drake Framework
+ *
+ * This source file is subject to the new BSD license that is bundled with this
+ * package in the file LICENSE.
+ *
+ * @category    Drake
+ * @package     UnitTests
+ * @copyright   Copyright (c) 2008-2010 Rob Zienert (http://robzienert.com)
+ * @license     http://www.opensource.org/licenses/bsd-license.php New BSD License
+ */
+
+if (!defined('ROOT_PATH')) {
+    define('ROOT_PATH', realpath(dirname(__FILE__) . '/../'));
+}
+
+if (!defined('LIBRARY_PATH')) {
+    define('LIBRARY_PATH', ROOT_PATH . DIRECTORY_SEPARATOR . 'library');
+}
+
+// Define application environment
+if (!defined('APPLICATION_ENV')) {
+    define('APPLICATION_ENV', 'testing');
+}
+
+/**
+ * PHPUnit Code Coverage / Test Report
+ */
+define('TESTS_GENERATE_REPORT', false);
+define('TESTS_GENERATE_REPORT_TARGET', '/path/to/target');
