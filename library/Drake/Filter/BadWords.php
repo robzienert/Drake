@@ -50,7 +50,7 @@ class Drake_Filter_BadWords implements Zend_Filter_Interface
             
             $value = explode(' ', $value);
             foreach ($value as $key => $part) {
-                if (in_array($part, $this->_stopwords)) {
+                if (in_array(strtolower($part), $this->_stopwords)) {
                     unset($value[$key]);
                 }
             }
@@ -68,7 +68,7 @@ class Drake_Filter_BadWords implements Zend_Filter_Interface
     protected function _getStopwords()
     {
         $file = $this->getStopwordsFile();
-        $this->_stopwords = split("[\n\r]+", file_get_contents($file));
+        $this->_stopwords = preg_split("/[\n\r]+/", file_get_contents($file));
         
         return $this->_stopwords;
     }

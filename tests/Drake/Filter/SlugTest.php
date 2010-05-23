@@ -21,32 +21,30 @@ require_once dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR . 'TestHe
  * @copyright   Copyright (c) 2008-2010 Rob Zienert (http://robzienert.com)
  * @license     http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-class Drake_Util_ArrayTest extends PHPUnit_Framework_TestCase
+class Drake_Filter_SlugTest extends PHPUnit_Framework_TestCase
 {
-    protected $_util;
+    protected $_filter;
 
     public function setUp()
     {
-        $this->_util = new Drake_Util_Array();
+        $this->_filter = new Drake_Filter_Slug();
     }
 
-    public function testShouldRecursivelyConvertObjects()
+    /**
+     * @dataProvider slugProvider
+     */
+    public function testStringGetsConvertedToAUrlSlug($string, $expected)
     {
-        $data = new stdClass();
-        $data->one = new stdClass();
-        $data->one->foo = 'bar';
-        $data->two = new stdClass();
-        $data->two->bar = 'food';
+        $this->assertSame($expected, $this->_filter->filter($string));
+    }
 
-        $target = array(
-            'one' => array(
-                'foo' => 'bar',
-            ),
-            'two' => array(
-                'bar' => 'food',
-            ),
+    public function slugProvider()
+    {
+        return array(
+            array('LOWERcase', 'lowercase'),
+            array('phrase with words', 'phrase-with-words'),
+            array('multiple  spaces corrected', 'multiple-spaces-corrected'),
+            array('underscores_and_$p3cial char[s]', 'underscores_and_-p3cial-char-s-'),
         );
-
-        $this->assertSame($this->_util->convertRecursive($data), $target);
     }
 }
