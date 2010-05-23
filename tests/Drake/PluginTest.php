@@ -41,4 +41,15 @@ class Drake_PluginTest extends PHPUnit_Framework_TestCase
         $this->_dispatcher->dispatch(new Drake_Event($this, 'test.plugin'));
         $this->assertTrue($this->dispatched);
     }
+
+    public function testManualDispatcherInjection()
+    {
+        $plugin = new Drake_Plugin_MockPlugin(array(
+            'dispatcher' => $this->_dispatcher
+        ));
+
+        $this->assertFalse($this->dispatched);
+        $this->_dispatcher->dispatch(new Drake_Event($this, 'test.plugin'));
+        $this->assertTrue($this->dispatched);
+    }
 }

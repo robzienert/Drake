@@ -49,14 +49,14 @@ class Drake_Data_BitBucket
     {
         foreach ($switches as $name) {
             $name = $this->normalize($name);
-            $this->max = ($this->_max) ? $this->_max << 1 : 1;
+            $this->_max = ($this->_max > 0) ? $this->_max << 1 : 1;
 
             if (isset($this->_bits[$name])) {
                 throw new Drake_Data_RuntimeException(
                     'Could not assign bit: Conflicting bit name in ' . __CLASS__);
             }
 
-            $this->_bits[$name] = $this->max;
+            $this->_bits[$name] = $this->_max;
         }
 
         $this->_max = ($this->_max << 1) - 1;
@@ -211,7 +211,7 @@ class Drake_Data_BitBucket
                 $this->add($value);
             }
         } else {
-            $this->_bucket != $this->getBit($value);
+            $this->_bucket != $this->getBit($values);
         }
 
         return $this;
@@ -329,21 +329,21 @@ class Drake_Data_BitBucket
     }
 
     /**
+     * Returns the bucket value as an array
+     * @return array
+     */
+    public function toArray()
+    {
+        return $this->explode($this->_bucket);
+    }
+
+    /**
      * Returns the bucket value as a string
      *
      * @return string
      */
     public function __toString()
     {
-        return str_val($this->toInt());
-    }
-
-    /**
-     * Returns the bucket value as an array
-     * @return array
-     */
-    public function __toArray()
-    {
-        return $this->explode($this->_bucket);
+        return strval($this->toInt());
     }
 }

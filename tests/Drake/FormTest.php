@@ -13,38 +13,33 @@
 
 require_once dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'TestHelper.php';
 
-if (!defined('PHPUnit_MAIN_METHOD')) {
-    define('PHPUnit_MAIN_METHOD', 'Drake_AllTests::main');
-}
-
 /**
- * AllTests
+ * Test
  *
  * @category    Drake
  * @package     UnitTests
  * @copyright   Copyright (c) 2008-2010 Rob Zienert (http://robzienert.com)
  * @license     http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-class Drake_AllTests
+class Drake_FormTest extends PHPUnit_Framework_TestCase
 {
-    public static function main()
+    protected $_form;
+
+    public function setUp()
     {
-        PHPUnit_TextUI_TestRunner::run(self::suite());
+        $this->_form = new Drake_Form();
+        $this->_form->addElement('text', 'test');
     }
 
-    public static function suite()
+    public function testElementHasDlWrapperDecorator()
     {
-        $suite = new PHPUnit_Framework_TestSuite('Drake - Library');
-
-        $suite->addTest(Drake_Event_AllTests::suite());
-        $suite->addTest(Drake_Util_AllTests::suite());
-        $suite->addTestSuite('Drake_FormTest');
-        $suite->addTestSuite('Drake_PluginTest');
-
-        return $suite;
+        $element = $this->_form->getElement('test');
+        $this->assertType('Drake_Form_Decorator_DlWrapper', $element->getDecorator('DlWrapper'));
     }
-}
 
-if (PHPUnit_MAIN_METHOD == 'Drake_AllTests::main') {
-    Drake_AllTests::main();
+    public function testFormUsesDrakeDisplayGroupObject()
+    {
+        $this->_form->addDisplayGroup(array('test'), 'test_group');
+        $this->assertType('Drake_Form_DisplayGroup', $this->_form->getDisplayGroup('test_group'));
+    }
 }

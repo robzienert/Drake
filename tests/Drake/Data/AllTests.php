@@ -11,10 +11,10 @@
  * @license     http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
 
-require_once dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'TestHelper.php';
+require_once dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR . 'TestHelper.php';
 
 if (!defined('PHPUnit_MAIN_METHOD')) {
-    define('PHPUnit_MAIN_METHOD', 'Drake_AllTests::main');
+    define('PHPUnit_MAIN_METHOD', 'Drake_Data_AllTests::main');
 }
 
 /**
@@ -25,7 +25,7 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
  * @copyright   Copyright (c) 2008-2010 Rob Zienert (http://robzienert.com)
  * @license     http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-class Drake_AllTests
+class Drake_Data_AllTests
 {
     public static function main()
     {
@@ -34,17 +34,14 @@ class Drake_AllTests
 
     public static function suite()
     {
-        $suite = new PHPUnit_Framework_TestSuite('Drake - Library');
+        $suite = new PHPUnit_Framework_TestSuite('Drake - Data');
 
-        $suite->addTest(Drake_Event_AllTests::suite());
-        $suite->addTest(Drake_Util_AllTests::suite());
-        $suite->addTestSuite('Drake_FormTest');
-        $suite->addTestSuite('Drake_PluginTest');
+        $suite->addTestSuite('Drake_Data_BitBucketTest');
 
         return $suite;
     }
 }
 
-if (PHPUnit_MAIN_METHOD == 'Drake_AllTests::main') {
-    Drake_AllTests::main();
+if (PHPUnit_MAIN_METHOD == 'Drake_Data_AllTests::main') {
+    Drake_Data_AllTests::main();
 }

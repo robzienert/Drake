@@ -6,8 +6,7 @@
  * package in the file LICENSE.
  *
  * @category    Drake
- * @package     Drake_View
- * @subpackage  Helper
+ * @package     Drake_Exception
  * @copyright   Copyright (c) 2008-2010 Rob Zienert (http://robzienert.com)
  * @license     http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
@@ -16,11 +15,10 @@
  * Exception interface
  *
  * @category    Drake
- * @package     Drake_View
- * @subpackage  Helper
+ * @package     Drake_Exception
  * @copyright   Copyright (c) 2008-2010 Rob Zienert (http://robzienert.com)
  * @license     http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-interface Drake_View_Helper_Exception extends Drake_Exception
+interface Drake_Exception
 {
 }
