@@ -29,7 +29,10 @@ class Drake_Util_StringInflector
      */
     public static function camelize($string)
     {
-        return str_replace(' ' , '', ucwords(preg_replace('/[^A-Z^a-z^0-9]+/', ' ', $string)));
+        $string = preg_replace('/[^A-Z^a-z^0-9]+/', ' ', $string);
+        $string = ucwords($string);
+        $string = str_replace(' ', '', $string);
+        return $string;
     }
 
     /**
@@ -47,7 +50,7 @@ class Drake_Util_StringInflector
     {
         $string = iconv('utf-8', 'ascii//TRANSLIT', $string);
         $string = strtolower($string);
-        $string = preg_replace('/^a-z0-9\-_]/', '-', $string);
+        $string = preg_replace('/[^a-z0-9\-_]+/', '-', $string);
         $string = preg_replace('/-{2,}/', '-', $string);
         return $string;
     }
