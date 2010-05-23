@@ -14,7 +14,7 @@
 require_once dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR . 'TestHelper.php';
 
 if (!defined('PHPUnit_MAIN_METHOD')) {
-    define('PHPUnit_MAIN_METHOD', 'Drake_Util_AllTests::main');
+    define('PHPUnit_MAIN_METHOD', 'Drake_Event_AllTests::main');
 }
 
 /**
@@ -25,7 +25,7 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
  * @copyright   Copyright (c) 2008-2010 Rob Zienert (http://robzienert.com)
  * @license     http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-class Drake_Util_AllTests
+class Drake_Event_AllTests
 {
     public static function main()
     {
@@ -34,15 +34,14 @@ class Drake_Util_AllTests
 
     public static function suite()
     {
-        $suite = new PHPUnit_Framework_TestSuite('Drake - Utilities');
+        $suite = new PHPUnit_Framework_TestSuite('Drake - Event');
 
-        $suite->addTestSuite('Drake_Util_ArrayTest');
-        $suite->addTestSuite('Drake_Util_StringInflectorTest');
+        $suite->addTestSuite('Drake_Event_DispatcherTest');
 
         return $suite;
     }
 }
 
-if (PHPUnit_MAIN_METHOD == 'Drake_Util_AllTests::main') {
-    Drake_Util_AllTests::main();
+if (PHPUnit_MAIN_METHOD == 'Drake_Event_AllTests::main') {
+    Drake_Event_AllTests::main();
 }

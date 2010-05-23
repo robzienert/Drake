@@ -83,7 +83,7 @@ class Drake_Util_StringInflectorTest extends PHPUnit_Framework_TestCase
     public function sluggifyProvider()
     {
         return array(
-            array('lowercase', 'lowercase'),
+            array('LOWERcase', 'lowercase'),
             array('phrase with words', 'phrase-with-words'),
             array('multiple  spaces corrected', 'multiple-spaces-corrected'),
             array('underscores_and_$p3cial char[s]', 'underscores_and_-p3cial-char-s-'),

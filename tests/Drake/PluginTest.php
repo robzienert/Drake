@@ -18,32 +18,31 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
 }
 
 /**
- * AllTests
+ * Test
  *
  * @category    Drake
  * @package     UnitTests
  * @copyright   Copyright (c) 2008-2010 Rob Zienert (http://robzienert.com)
  * @license     http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-class Drake_AllTests
+class Drake_PluginTest extends PHPUnit_Framework_TestCase
 {
-    public static function main()
+    protected $_dispatcher;
+
+    public $dispatched;
+
+    public function setUp()
     {
-        PHPUnit_TextUI_TestRunner::run(self::suite());
+        $this->_dispatcher = new Drake_Event_Dispatcher();
+        Drake_Plugin::setDefaultDispatcher($this->_dispatcher);
+        $this->dispatched = false;
     }
 
-    public static function suite()
+    public function testListenerIsDispatchedOnEvent()
     {
-        $suite = new PHPUnit_Framework_TestSuite('Drake - Library');
-
-        $suite->addTest(Drake_Event_AllTests::suite());
-        $suite->addTest(Drake_Util_AllTests::suite());
-        $suite->addTestSuite('Drake_PluginTest');
-
-        return $suite;
+        $plugin = new Drake_Plugin_MockPlugin();
+        $this->assertFalse($this->dispatched);
+        $this->_dispatcher->dispatch(new Drake_Event($this, 'test.plugin'));
+        $this->assertTrue($this->dispatched);
     }
-}
-
-if (PHPUnit_MAIN_METHOD == 'Drake_AllTests::main') {
-    Drake_AllTests::main();
 }
