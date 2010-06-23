@@ -28,39 +28,34 @@ class Drake_Form extends Zend_Form
     {
         $this->addPrefixPath('Drake_Form', 'Drake/Form');
         $this->addElementPrefixPath('Drake', 'Drake');
-        $this->addElementPrefixPath('Drake_Validate', 
-                                    'Drake/Validate',
-                                    Zend_Form_Element::VALIDATE);
+        
         $this->setDefaultDisplayGroupClass('Drake_Form_DisplayGroup');
+
+        $this->setElementDecorators(array(
+            'ViewHelper',
+            'Errors',
+            array(
+                'decorator' => 'Description',
+                'options' => array(
+                    'tag' => 'p',
+                    'class' => 'description',
+                ),
+            ),
+            array(
+                'decorator' => 'HtmlTag',
+                'options' => array('tag' => 'dd'),
+            ),
+            array(
+                'decorator' => 'Label',
+                'options' => array('tag' => 'dt')
+            ),
+            'DlWrapper'
+        ));
 
         $this->setDecorators(array(
             'FormElements',
             array('Description', array('placement' => 'prepend')),
             'Form'
         ));
-    }
-
-    /**
-     * Add a new element to the form
-     *
-     * Appends the DlWrapper decorator onto the form element as well
-     *
-     * @param string|Zend_Form_Element $element
-     * @param string $name
-     * @param array $options
-     * @return Zend_Form
-     */
-    public function addElement($element, $name = null, $options = null)
-    {
-        parent::addElement($element, $name, $options);
-
-        if (!$element instanceof Zend_Form_Element) {
-            $element = $this->getElement($name);
-        }
-        if (!$element->loadDefaultDecoratorsIsDisabled()) {
-            $element->addDecorator('DlWrapper');
-        }
-
-        return $this;
     }
 }
