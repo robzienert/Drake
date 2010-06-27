@@ -20,6 +20,7 @@
  * @license     http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
 abstract class Drake_Model_ModelAbstract extends Drake_Model_ModelAbstract
+    implements Zend_Acl_Resource_Interface
 {
     /**
      * @var Zend_Acl
