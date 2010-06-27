@@ -11,6 +11,8 @@
  * @license     http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
 
+require_once 'Zend/Application.php';
+
 /**
  * Needs documentation
  *
