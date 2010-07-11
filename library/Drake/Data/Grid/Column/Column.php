@@ -24,6 +24,11 @@
 class Drake_Data_Grid_Column_Column
 {
     /**
+     * @var string
+     */
+    protected $_cssClass;
+    
+    /**
      * @var Drake_Data_Grid_Column_Filter_FilterAbstract
      */
     protected $_filter;
@@ -209,6 +214,26 @@ class Drake_Data_Grid_Column_Column
     public function getOrder()
     {
         return $this->_order;
+    }
+
+    /**
+     * Set the CSS class
+     *
+     * @param string $cssClass
+     */
+    public function setCssClass($cssClass)
+    {
+        $this->_cssClass = $cssClass;
+    }
+
+    /**
+     * Get the CSS class
+     *
+     * @return string
+     */
+    public function getCssClass()
+    {
+        return $this->_cssClass;
     }
 
     /**
