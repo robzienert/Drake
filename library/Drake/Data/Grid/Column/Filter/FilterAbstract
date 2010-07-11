@@ -1,0 +1,40 @@
+<?php
+abstract class Drake_Data_Grid_Column_Filter_FilterAbstract
+    implements Zend_Filter_Interface
+{
+    protected $callback;
+    protected $type;
+
+    public function setType($type)
+    {
+        $type = Drake_Util_StringInflector::underscore($type);
+        $this->type = $type;
+    }
+
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    public function setCallback(Zend_Filter_Interface $callback)
+    {
+        $this->callback = $callback;
+    }
+
+    public function getCallback()
+    {
+        return $this->callback;
+    }
+
+    public function filter($value)
+    {
+        if ($this->getCallback()) {
+            return $this->getCallback()->filter($value);
+        }
+        return $this->_filter($value);
+    }
+
+    abstract protected function _filter($value)
+    {
+    }
+}
