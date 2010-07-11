@@ -23,6 +23,14 @@
  */
 class Drake_View_Helper_PaginationSort extends Zend_View_Helper_Abstract
 {
+    /**
+     * Creates a pagination sorting link
+     *
+     * @param string $label
+     * @param string $column
+     * @param string $title
+     * @return string
+     */
     public function paginationSort($label, $column, $title = 'Click to reorder')
     {
         $front = Zend_Controller_Front::getInstance();

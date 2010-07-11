@@ -108,8 +108,6 @@ class Drake_Controller_Plugin_Acl extends Zend_Controller_Plugin_Abstract
             ->getParam('bootstrap')
             ->getContainer();
 
-        var_dump($container);exit;
-
         $userService = $container->userService;
         $role = $userService->getActiveUser()->getRoleId();
 
