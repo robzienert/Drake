@@ -62,19 +62,22 @@ class Drake_Data_Grid_Renderer extends Zend_View_Helper_HtmlElement
     /**
      * Renders the column headers
      *
+     * @todo Add sortable flag, then add in pagination controls
+     *
      * @return string
      */
     protected function _generateColumnHeaders()
     {
-        $columns = array();
+        $xhtml = '<thead><tr>' . PHP_EOL;
         foreach ($this->getGrid()->getColumns() as $column) {
-            $columns[] = $this->view->escape($column->getName());
-        }
+            $attribs = $this->_htmlAttribs(array(
+                'width' => $column->getWidth(),
+            ));
 
-        $xhtml = '<thead>';
-        $xhtml .= $this->_generateRow($columns);
-        $xhtml .= '</thead>';
-        
+            $value = $this->view->escape($column->getName());
+            $xhtml .= "<td $attribs>$value</td>" . PHP_EOL;
+        }
+        $xhtml .= '</tr></thead>' . PHP_EOL;
         return $xhtml;
     }
 

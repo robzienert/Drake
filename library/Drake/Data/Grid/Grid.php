@@ -38,6 +38,11 @@ class Drake_Data_Grid_Grid
     /**
      * @var array
      */
+    protected $_columnHeaders;
+
+    /**
+     * @var array
+     */
     protected $_columnRenderers = array();
 
     /**
@@ -219,6 +224,8 @@ class Drake_Data_Grid_Grid
 
     /**
      * Add a new column to the grid
+     *
+     * @todo Refactor to reflect more of a Zend_Form->addElement approach
      *
      * @param string $columnId
      * @param Drake_Data_Grid_Column_Column $column

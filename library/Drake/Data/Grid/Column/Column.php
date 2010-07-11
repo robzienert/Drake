@@ -69,6 +69,11 @@ class Drake_Data_Grid_Column_Column
     protected $_type = 'generic';
 
     /**
+     * @var int
+     */
+    protected $_width = 50;
+
+    /**
      * Constructor
      *
      * @param array $options
@@ -243,6 +248,28 @@ class Drake_Data_Grid_Column_Column
     public function getCssClass()
     {
         return $this->_cssClass;
+    }
+
+    /**
+     * Set the column width
+     *
+     * @param int $width
+     * @return Drake_Data_Grid_Column_Column
+     */
+    public function setWidth($width)
+    {
+        $this->_width = (int) $width;
+        return $this;
+    }
+
+    /**
+     * Get the column width
+     *
+     * @return int
+     */
+    public function getWidth()
+    {
+        return $this->_width;
     }
 
     /**

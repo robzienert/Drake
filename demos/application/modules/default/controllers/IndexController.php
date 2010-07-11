@@ -36,11 +36,18 @@ class IndexController extends Zend_Controller_Action
         $grid->addColumn('title', new Drake_Data_Grid_Column_Column(array(
             'name' => 'Title',
             'rowField' => 'title',
+            'width' => 100,
         )));
         $grid->addColumn('slug', new Drake_Data_Grid_Column_Column(array(
             'name' => 'URL Slug',
-            'rowField' => 'slug'
+            'rowField' => 'slug',
+            'width' => 75,
         )));
+        
+        // @todo Column filter/renderer overrides need to be done after the
+        // column has been added right now. This needs to change, as well as
+        // accepting names instead of just objects.
+        $grid->getColumn('slug')->setFilter(new Drake_Data_Grid_Column_Filter_None());
 
         $this->view->grid = $grid->render();
     }
