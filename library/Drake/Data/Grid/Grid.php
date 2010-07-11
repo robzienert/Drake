@@ -56,6 +56,16 @@ class Drake_Data_Grid_Grid
     protected $preparedRows;
 
     /**
+     * @var Drake_Data_Grid_Renderer
+     */
+    protected $renderer;
+
+    /**
+     * @var Zend_View_Interface
+     */
+    protected $view;
+
+    /**
      * Constructor
      *
      * @param array $options
@@ -107,6 +117,37 @@ class Drake_Data_Grid_Grid
     public function setEmptyText($emptyText)
     {
         $this->emptyText = $emptyText;
+    }
+
+    /**
+     * Get the empty text
+     *
+     * @return string
+     */
+    public function getEmptyText()
+    {
+        return $this->emptyText;
+    }
+
+    /**
+     * Set the view object
+     *
+     * @param Zend_View_Interface $view
+     * @return void
+     */
+    public function setView(Zend_View_Interface $view)
+    {
+        $this->view = $view;
+    }
+
+    /**
+     * Get the view object
+     *
+     * @return Zend_View_Interface
+     */
+    public function getView()
+    {
+        return $this->view;
     }
 
     /**
@@ -310,6 +351,31 @@ class Drake_Data_Grid_Grid
     }
 
     /**
+     * Set the grid renderer
+     *
+     * @todo Set up a Renderable interface
+     *
+     * @param Drake_Data_Grid_Renderer $renderer
+     */
+    public function setGridRenderer(Drake_Data_Grid_Renderer $renderer)
+    {
+        $this->renderer = $renderer;
+    }
+
+    /**
+     * Get the grid renderer
+     *
+     * @return Drake_Data_Grid_Renderer
+     */
+    public function getGridRenderer()
+    {
+        if (null === $this->renderer) {
+            $this->renderer = new Drake_Data_Grid_Renderer();
+        }
+        return $this->renderer;
+    }
+
+    /**
      * Prepares the grid data for rendering.
      *
      * @return array
@@ -342,18 +408,17 @@ class Drake_Data_Grid_Grid
      * Render the grid
      *
      * @return string
+     * @throws LogicException If the view object has not been set
      */
     public function render()
     {
-        if (null === $this->preparedRows) {
-            $this->prepare();
+        if (null === $this->getView()) {
+            throw new LogicException(
+                "Cannot render grid: View object has not been set!");
         }
-
-        if (empty($this->preparedRows)) {
-            // Render the empty text var
-        }
-
-        // @todo Default grid renderer? prepare() allows people to roll their
-        // own template.
+        
+        return $this->getGridRenderer()
+            ->setGrid($this)
+            ->render();
     }
 }
