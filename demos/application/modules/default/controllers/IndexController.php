@@ -26,6 +26,7 @@ class IndexController extends Zend_Controller_Action
         }
 
         $grid = new Drake_Data_Grid_Grid(array(
+            'id' => 'test_grid',
             'view' => $this->view,
             'data' => $data,
         ));
@@ -39,6 +40,8 @@ class IndexController extends Zend_Controller_Action
             'width' => 100,
         )));
         $grid->addColumn('slug', new Drake_Data_Grid_Column_Column(array(
+//            'filter' => 'none',
+//            'filter' => new Drake_Data_Grid_Column_Filter_None(),
             'name' => 'URL Slug',
             'rowField' => 'slug',
             'width' => 75,

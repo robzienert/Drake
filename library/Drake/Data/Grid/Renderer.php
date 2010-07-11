@@ -75,7 +75,7 @@ class Drake_Data_Grid_Renderer extends Zend_View_Helper_HtmlElement
             ));
 
             $value = $this->view->escape($column->getName());
-            $xhtml .= "<td $attribs>$value</td>" . PHP_EOL;
+            $xhtml .= "<td$attribs>$value</td>" . PHP_EOL;
         }
         $xhtml .= '</tr></thead>' . PHP_EOL;
         return $xhtml;
@@ -89,11 +89,15 @@ class Drake_Data_Grid_Renderer extends Zend_View_Helper_HtmlElement
      */
     protected function _generateRow($row)
     {
-        $xhtml = '<tr>' . PHP_EOL;
+        $class = (string) $this->view->cycle(array('odd', 'even'))->next();
+        $class = ' class="zebra ' . $class . '"';
+        
+        $xhtml = '<tr' . $class . '>' . PHP_EOL;
         foreach ($row as $column) {
             $xhtml .= '<td>' . $column . '</td>' . PHP_EOL;
         }
         $xhtml .= '</tr>' . PHP_EOL;
+        
         return $xhtml;
     }
 
