@@ -19,7 +19,7 @@
  * @copyright   Copyright (c) 2008-2010 Rob Zienert (http://robzienert.com)
  * @license     http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-abstract class Drake_Model_ModelAbstract extends Drake_Model_ModelAbstract
+abstract class Drake_Model_AccessibleModelAbstract extends Drake_Model_ModelAbstract
     implements Zend_Acl_Resource_Interface
 {
     /**
