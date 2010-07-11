@@ -51,6 +51,11 @@ class Drake_Data_Grid_Grid
     protected $emptyText = 'No record found.';
 
     /**
+     * @var array|null
+     */
+    protected $preparedRows;
+
+    /**
      * Constructor
      *
      * @param array $options
@@ -302,5 +307,51 @@ class Drake_Data_Grid_Grid
         if (isset($this->columnFilters[$name])) {
             unset($this->columnFilters[$name]);
         }
+    }
+
+    /**
+     * Prepares the grid data for rendering.
+     *
+     * @return array
+     */
+    public function prepare()
+    {
+        $preparedRows[] = array();
+        foreach ($this->getData as $data) {
+            $row = array();
+            foreach ($this->getColumns() as $column) {
+                /* $column Drake_Data_Grid_Column_Column */
+                if (isset($data[$column->getRowField()])) {
+                    $order = $column->getOrder();
+                    while (isset($row[$order])) {
+                        $order += 0.01;
+                    }
+                    $row[$order] = $column->render($data[$column->getRowField()]);
+                }
+            }
+            $preparedRows[] = $row;
+        }
+
+        $this->preparedRows = $preparedRows;
+        return $this->preparedRows;
+    }
+
+    /**
+     * Render the grid
+     *
+     * @return string
+     */
+    public function render()
+    {
+        if (null === $this->preparedRows) {
+            $this->prepare();
+        }
+
+        if (empty($this->preparedRows)) {
+            // Render the empty text var
+        }
+
+        // @todo Default grid renderer? prepare() allows people to roll their
+        // own template.
     }
 }

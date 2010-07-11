@@ -44,6 +44,11 @@ class Drake_Data_Grid_Column_Column
     protected $name;
 
     /**
+     * @var int
+     */
+    protected $order = 0;
+
+    /**
      * @var Drake_Data_Grid_Column_Renderer_RendererAbstract
      */
     protected $renderer;
@@ -183,6 +188,27 @@ class Drake_Data_Grid_Column_Column
     public function getType()
     {
         return $this->type;
+    }
+
+    /**
+     * Set the column order
+     *
+     * @param int $order
+     * @return void
+     */
+    public function setOrder($order)
+    {
+        $this->order = $order;
+    }
+
+    /**
+     * Get the column order
+     *
+     * @return int
+     */
+    public function getOrder()
+    {
+        return $this->order;
     }
 
     /**
@@ -334,5 +360,18 @@ class Drake_Data_Grid_Column_Column
         }
 
         return $filterClass;
+    }
+
+    /**
+     * Render the column
+     *
+     * @param mixed $value
+     * @return string
+     */
+    public function render($value)
+    {
+        $value = $this->getFilter()->filter($value);
+        $result = $this->getRenderer()->setValue($value)->render();
+        return $result;
     }
 }
