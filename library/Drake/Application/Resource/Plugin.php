@@ -50,7 +50,7 @@ class Drake_Application_Resource_Plugin extends Zend_Application_Resource_Resour
                 include_once $file->getPath() . DIRECTORY_SEPARATOR . $file->getFilename();
 
                 if (!class_exists($class)) {
-                    throw new Drake_Appication_Resource_RuntimeException("Plugin file '{$file->getFilename()}' is found, but '{$class}' does not exist.");
+                    throw new Drake_Application_Resource_RuntimeException("Plugin file '{$file->getFilename()}' is found, but '{$class}' does not exist.");
                 }
 
                 // Initialize the plugin
