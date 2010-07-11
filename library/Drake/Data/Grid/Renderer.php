@@ -10,11 +10,12 @@ class Drake_Data_Grid_Renderer extends Zend_View_Helper_HtmlElement
      * Set the grid
      *
      * @param Drake_Data_Grid_Grid $grid
-     * @return void
+     * @return Drake_Data_Grid_Renderer
      */
     public function setGrid(Drake_Data_Grid_Grid $grid)
     {
         $this->_grid = $grid;
+        return $this;
     }
 
     /**
@@ -67,13 +68,14 @@ class Drake_Data_Grid_Renderer extends Zend_View_Helper_HtmlElement
     {
         $columns = array();
         foreach ($this->getGrid()->getColumns() as $column) {
-            $columns = $this->view->escape($column->getName());
+            $columns[] = $this->view->escape($column->getName());
         }
+
         $xhtml = '<thead>';
-        $xhtml .= $this->_renderRow($columns);
+        $xhtml .= $this->_generateRow($columns);
         $xhtml .= '</thead>';
         
-        return $row;
+        return $xhtml;
     }
 
     /**

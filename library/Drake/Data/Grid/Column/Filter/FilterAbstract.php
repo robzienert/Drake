@@ -39,12 +39,13 @@ abstract class Drake_Data_Grid_Column_Filter_FilterAbstract
      * application.
      *
      * @param string $type
-     * @return void
+     * @return Drake_Data_Grid_Column_Filter_FilterAbstract
      */
     public function setType($type)
     {
         $type = Drake_Util_StringInflector::underscore($type);
         $this->_type = $type;
+        return $this;
     }
 
     /**
@@ -66,22 +67,20 @@ abstract class Drake_Data_Grid_Column_Filter_FilterAbstract
      * Zend_Filter_Interface.
      *
      * @param callback|Zend_Filter_Interface $callback
-     * @return void
+     * @return Drake_Data_Grid_Column_Filter_FilterAbstract
      */
     public function setCallback($callback)
     {
-        if (is_array($callback) && !is_callable($callback)) {
+        if (!is_object($callback) && !is_callable($callback)) {
             throw new InvalidArgumentException(
                 "Provided callback is not callable!");
         } elseif (!$callback instanceof Zend_Filter_Interface) {
             throw new InvalidArgumentException(
                 "Provided callback is not an instance of Zend_Filter_Interface");
-        } else {
-            throw new InvalidArgumentException(
-                "Callback must be a valid callback array or an instance of Zend_Filter_Interface");
         }
 
         $this->_callback = $callback;
+        return $this;
     }
 
     /**
@@ -103,10 +102,18 @@ abstract class Drake_Data_Grid_Column_Filter_FilterAbstract
      */
     public function filter($value)
     {
-        if ($this->getCallback()) {
-            return call_user_func($this->getCallback(), $value);
+        $callback = $this->getCallback();
+        if ($callback) {
+            if (is_object($callback)) {
+                $value = $callback->filter($value);
+            } else {
+                $value = call_user_func($callback, $value);
+            }
+        } else {
+            $value = $this->_filter($value);
         }
-        return $this->_filter($value);
+        
+        return $value;
     }
 
     /**

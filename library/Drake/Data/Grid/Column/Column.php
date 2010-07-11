@@ -83,13 +83,14 @@ class Drake_Data_Grid_Column_Column
      * Set options en masse
      *
      * @param array $options
-     * @return void
+     * @return Drake_Data_Grid_Column_Column
      */
     public function setOptions($options)
     {
         foreach ($options as $name => $value) {
             $this->setOption($name, $value);
         }
+        return $this;
     }
 
     /**
@@ -114,11 +115,12 @@ class Drake_Data_Grid_Column_Column
      * Set the column id
      *
      * @param string $id
-     * @return void
+     * @return Drake_Data_Grid_Column_Column
      */
     public function setId($id)
     {
         $this->_id = $id;
+        return $this;
     }
 
     /**
@@ -135,11 +137,12 @@ class Drake_Data_Grid_Column_Column
      * Set the column name; this will be used in the grid header
      *
      * @param string $name
-     * @return void
+     * @return Drake_Data_Grid_Column_Column
      */
     public function setName($name)
     {
         $this->_name = $name;
+        return $this;
     }
 
     /**
@@ -157,11 +160,12 @@ class Drake_Data_Grid_Column_Column
      * data row.
      *
      * @param string $rowField
-     * @return void
+     * @return Drake_Data_Grid_Column_Column
      */
     public function setRowField($rowField)
     {
         $this->_rowField = $rowField;
+        return $this;
     }
 
     /**
@@ -178,11 +182,13 @@ class Drake_Data_Grid_Column_Column
      * Set the column type
      *
      * @param string $type
+     * @return Drake_Data_Grid_Column_Column
      */
     public function setType($type)
     {
         $type = Drake_Util_StringInflector::underscore($type);
         $this->_type = $type;
+        return $this;
     }
 
     /**
@@ -199,11 +205,12 @@ class Drake_Data_Grid_Column_Column
      * Set the column order
      *
      * @param int $order
-     * @return void
+     * @return Drake_Data_Grid_Column_Column
      */
     public function setOrder($order)
     {
         $this->_order = $order;
+        return $this;
     }
 
     /**
@@ -220,10 +227,12 @@ class Drake_Data_Grid_Column_Column
      * Set the CSS class
      *
      * @param string $cssClass
+     * @return Drake_Data_Grid_Column_Column
      */
     public function setCssClass($cssClass)
     {
         $this->_cssClass = $cssClass;
+        return $this;
     }
 
     /**
@@ -240,11 +249,12 @@ class Drake_Data_Grid_Column_Column
      * Set the grid
      *
      * @param Drake_Data_Grid_Grid $grid
-     * @return void
+     * @return Drake_Data_Grid_Column_Column
      */
     public function setGrid(Drake_Data_Grid_Grid $grid)
     {
         $this->_grid = $grid;
+        return $this;
     }
 
     /**
@@ -262,7 +272,7 @@ class Drake_Data_Grid_Column_Column
      * it will be added to it's internal cache.
      *
      * @param Drake_Data_Grid_Column_Renderer_RendererAbstract $renderer
-     * @return void
+     * @return Drake_Data_Grid_Column_Column
      */
     public function setRenderer(Drake_Data_Grid_Column_Renderer_RendererAbstract $renderer)
     {
@@ -272,6 +282,7 @@ class Drake_Data_Grid_Column_Column
         }
         
         $this->_renderer = $renderer;
+        return $this;
     }
 
     /**
@@ -283,7 +294,8 @@ class Drake_Data_Grid_Column_Column
     public function getRenderer()
     {
         if (null === $this->_renderer) {
-            $renderer = new $this->_getRendererByType();
+            $classname = $this->_getRendererByType();
+            $renderer = new $classname;
             $this->setRenderer($renderer);
         }
         return $this->_renderer;
@@ -327,7 +339,7 @@ class Drake_Data_Grid_Column_Column
      * added to it's internal cache.
      *
      * @param Drake_Data_Grid_Column_Filter_FilterAbstract $filter
-     * @return void
+     * @return Drake_Data_Grid_Column_Column
      */
     public function setFilter(Drake_Data_Grid_Column_Filter_FilterAbstract $filter)
     {
@@ -337,6 +349,7 @@ class Drake_Data_Grid_Column_Column
         }
         
         $this->_filter = $filter;
+        return $this;
     }
 
     /**
@@ -348,7 +361,8 @@ class Drake_Data_Grid_Column_Column
     public function getFilter()
     {
         if (null === $this->_filter) {
-            $filter = new $this->_getFilterByType();
+            $classname = $this->_getFilterByType();
+            $filter = new $classname;
             $this->setFilter($filter);
         }
         return $this->_filter;

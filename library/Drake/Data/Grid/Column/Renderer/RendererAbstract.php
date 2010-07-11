@@ -38,12 +38,13 @@ abstract class Drake_Data_Grid_Column_Renderer_RendererAbstract
      * application.
      *
      * @param string $type
-     * @return void
+     * @return Drake_Data_Grid_Column_Renderer_RendererAbstract
      */
     public function setType($type)
     {
         $type = Drake_Util_StringInflector::underscore($type);
         $this->_type = $type;
+        return $this;
     }
 
     /**
@@ -60,11 +61,12 @@ abstract class Drake_Data_Grid_Column_Renderer_RendererAbstract
      * Set the value that will be rendered
      *
      * @param string $value
-     * @return void
+     * @return Drake_Data_Grid_Column_Renderer_RendererAbstract
      */
     public function setValue($value)
     {
         $this->_value = $value;
+        return $this;
     }
 
     /**
@@ -82,7 +84,5 @@ abstract class Drake_Data_Grid_Column_Renderer_RendererAbstract
      *
      * @return string
      */
-    abstract public function render()
-    {
-    }
+    abstract public function render();
 }
