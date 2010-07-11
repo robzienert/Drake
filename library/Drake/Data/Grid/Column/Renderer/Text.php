@@ -27,7 +27,7 @@ class Drake_Data_Grid_Column_Renderer_Text
     /**
      * @var string
      */
-    protected $type = 'text';
+    protected $_type = 'text';
 
     /**
      * Renders the column value

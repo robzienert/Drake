@@ -28,42 +28,42 @@ class Drake_Data_Grid_Grid
     /**
      * @var array
      */
-    protected $columns = array();
+    protected $_columns = array();
 
     /**
      * @var array
      */
-    protected $columnFilters = array();
+    protected $_columnFilters = array();
 
     /**
      * @var array
      */
-    protected $columnRenderers = array();
+    protected $_columnRenderers = array();
 
     /**
      * @var array
      */
-    protected $data = array();
+    protected $_data = array();
 
     /**
      * @var string
      */
-    protected $emptyText = 'No record found.';
+    protected $_emptyText = 'No record found.';
 
     /**
      * @var array|null
      */
-    protected $preparedRows;
+    protected $_preparedRows;
 
     /**
      * @var Drake_Data_Grid_Renderer
      */
-    protected $renderer;
+    protected $_renderer;
 
     /**
      * @var Zend_View_Interface
      */
-    protected $view;
+    protected $_view;
 
     /**
      * Constructor
@@ -116,7 +116,7 @@ class Drake_Data_Grid_Grid
      */
     public function setEmptyText($emptyText)
     {
-        $this->emptyText = $emptyText;
+        $this->_emptyText = $emptyText;
     }
 
     /**
@@ -126,7 +126,7 @@ class Drake_Data_Grid_Grid
      */
     public function getEmptyText()
     {
-        return $this->emptyText;
+        return $this->_emptyText;
     }
 
     /**
@@ -137,7 +137,7 @@ class Drake_Data_Grid_Grid
      */
     public function setView(Zend_View_Interface $view)
     {
-        $this->view = $view;
+        $this->_view = $view;
     }
 
     /**
@@ -147,7 +147,7 @@ class Drake_Data_Grid_Grid
      */
     public function getView()
     {
-        return $this->view;
+        return $this->_view;
     }
 
     /**
@@ -158,7 +158,7 @@ class Drake_Data_Grid_Grid
      */
     public function setData($data)
     {
-        $this->data = $data;
+        $this->_data = $data;
     }
 
     /**
@@ -168,7 +168,7 @@ class Drake_Data_Grid_Grid
      */
     public function getData()
     {
-        return $this->data;
+        return $this->_data;
     }
 
     /**
@@ -180,12 +180,12 @@ class Drake_Data_Grid_Grid
     public function addColumn($columnId, Drake_Data_Grid_Column_Column $column)
     {
         $columnId = Drake_Util_StringInflector::underscore($columnId);
-        if (isset($this->columns[$columnId])) {
+        if (isset($this->_columns[$columnId])) {
             throw new LogicException(
                 "Cannot add new column `$columnId`: A column already exists with that id");
         }
         $column->setId($columnId);
-        $this->columns[$columnId] = $column;
+        $this->_columns[$columnId] = $column;
     }
 
     /**
@@ -198,8 +198,8 @@ class Drake_Data_Grid_Grid
     public function getColumn($columnId)
     {
         $columnId = Drake_Util_StringInflector::underscore($columnId);
-        if (isset($this->columns[$columnId])) {
-            return $this->columns[$columnId];
+        if (isset($this->_columns[$columnId])) {
+            return $this->_columns[$columnId];
         }
         return false;
     }
@@ -211,7 +211,7 @@ class Drake_Data_Grid_Grid
      */
     public function getColumns()
     {
-        return $this->columns;
+        return $this->_columns;
     }
 
     /**
@@ -223,8 +223,8 @@ class Drake_Data_Grid_Grid
     public function removeColumn($columnId)
     {
         $columnId = Drake_Util_StringInflector::underscore($columnId);
-        if (isset($this->columns[$columnId])) {
-            unset($this->columns[$columnId]);
+        if (isset($this->_columns[$columnId])) {
+            unset($this->_columns[$columnId]);
         }
     }
 
@@ -235,7 +235,7 @@ class Drake_Data_Grid_Grid
      */
     public function getColumnCount()
     {
-        return count($this->columns);
+        return count($this->_columns);
     }
 
     /**
@@ -247,11 +247,11 @@ class Drake_Data_Grid_Grid
     public function addColumnRenderer(Drake_Data_Grid_Column_Renderer_RendererAbstract $renderer)
     {
         $name = $renderer->getName();
-        if (isset($this->columnRenderers[$name])) {
+        if (isset($this->_columnRenderers[$name])) {
             throw new LogicException(
                 "Renderer `$name` has already been registered with the grid");
         }
-        $this->columnRenderers[$name] = $renderer;
+        $this->_columnRenderers[$name] = $renderer;
     }
 
     /**
@@ -264,8 +264,8 @@ class Drake_Data_Grid_Grid
     public function getColumnRenderer($name)
     {
         $name = Drake_Util_StringInflector::underscore($name);
-        if (isset($this->columnRenderers[$name])) {
-            return $this->columnRenderers[$name];
+        if (isset($this->_columnRenderers[$name])) {
+            return $this->_columnRenderers[$name];
         }
         return false;
     }
@@ -277,7 +277,7 @@ class Drake_Data_Grid_Grid
      */
     public function getColumnRenderers()
     {
-        return $this->columnRenderers;
+        return $this->_columnRenderers;
     }
 
     /**
@@ -289,8 +289,8 @@ class Drake_Data_Grid_Grid
     public function removeColumnRenderer($name)
     {
         $name = Drake_Util_StringInflector::underscore($name);
-        if (isset($this->columnRenderers[$name])) {
-            unset($this->columnRenderers[$name]);
+        if (isset($this->_columnRenderers[$name])) {
+            unset($this->_columnRenderers[$name]);
         }
     }
 
@@ -303,11 +303,11 @@ class Drake_Data_Grid_Grid
     public function addColumnFilter(Drake_Data_Grid_Column_Filter_FilterAbstract $filter)
     {
         $name = $filter->getName();
-        if (isset($this->columnFilters[$name])) {
+        if (isset($this->_columnFilters[$name])) {
             throw new LogicException(
                 "Filter `$name` has already been registered with the grid");
         }
-        $this->columnFilters[$name] = $filter;
+        $this->_columnFilters[$name] = $filter;
     }
 
     /**
@@ -320,8 +320,8 @@ class Drake_Data_Grid_Grid
     public function getColumnFilter($name)
     {
         $name = Drake_Util_StringInflector::underscore($name);
-        if (isset($this->columnFilters[$name])) {
-            return $this->columnFilters[$name];
+        if (isset($this->_columnFilters[$name])) {
+            return $this->_columnFilters[$name];
         }
         return false;
     }
@@ -333,7 +333,7 @@ class Drake_Data_Grid_Grid
      */
     public function getColumnFilters()
     {
-        return $this->columnFilters;
+        return $this->_columnFilters;
     }
 
     /**
@@ -345,8 +345,8 @@ class Drake_Data_Grid_Grid
     public function removeColumnFilter($name)
     {
         $name = Drake_Util_StringInflector::underscore($name);
-        if (isset($this->columnFilters[$name])) {
-            unset($this->columnFilters[$name]);
+        if (isset($this->_columnFilters[$name])) {
+            unset($this->_columnFilters[$name]);
         }
     }
 
@@ -359,7 +359,7 @@ class Drake_Data_Grid_Grid
      */
     public function setGridRenderer(Drake_Data_Grid_Renderer $renderer)
     {
-        $this->renderer = $renderer;
+        $this->_renderer = $renderer;
     }
 
     /**
@@ -369,10 +369,10 @@ class Drake_Data_Grid_Grid
      */
     public function getGridRenderer()
     {
-        if (null === $this->renderer) {
-            $this->renderer = new Drake_Data_Grid_Renderer();
+        if (null === $this->_renderer) {
+            $this->_renderer = new Drake_Data_Grid_Renderer();
         }
-        return $this->renderer;
+        return $this->_renderer;
     }
 
     /**
@@ -400,7 +400,7 @@ class Drake_Data_Grid_Grid
             $preparedRows[] = $row;
         }
 
-        $this->preparedRows = $preparedRows;
+        $this->_preparedRows = $preparedRows;
         return $this->preparedRows;
     }
 
@@ -419,6 +419,7 @@ class Drake_Data_Grid_Grid
         
         return $this->getGridRenderer()
             ->setGrid($this)
+            ->setView($this->getView())
             ->render();
     }
 }

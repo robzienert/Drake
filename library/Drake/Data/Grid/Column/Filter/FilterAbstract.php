@@ -27,12 +27,12 @@ abstract class Drake_Data_Grid_Column_Filter_FilterAbstract
     /**
      * @var callback
      */
-    protected $callback;
+    protected $_callback;
 
     /**
      * @var string
      */
-    protected $type;
+    protected $_type;
 
     /**
      * Set the filter type. This is used to identify the filter inside of the
@@ -44,7 +44,7 @@ abstract class Drake_Data_Grid_Column_Filter_FilterAbstract
     public function setType($type)
     {
         $type = Drake_Util_StringInflector::underscore($type);
-        $this->type = $type;
+        $this->_type = $type;
     }
 
     /**
@@ -54,7 +54,7 @@ abstract class Drake_Data_Grid_Column_Filter_FilterAbstract
      */
     public function getType()
     {
-        return $this->type;
+        return $this->_type;
     }
 
     /**
@@ -81,7 +81,7 @@ abstract class Drake_Data_Grid_Column_Filter_FilterAbstract
                 "Callback must be a valid callback array or an instance of Zend_Filter_Interface");
         }
 
-        $this->callback = $callback;
+        $this->_callback = $callback;
     }
 
     /**
@@ -91,7 +91,7 @@ abstract class Drake_Data_Grid_Column_Filter_FilterAbstract
      */
     public function getCallback()
     {
-        return $this->callback;
+        return $this->_callback;
     }
 
     /**

@@ -27,7 +27,7 @@ class Drake_Data_Grid_Column_Filter_Text
     /**
      * @var string
      */
-    protected $type = 'text';
+    protected $_type = 'text';
 
     /**
      * Constructor

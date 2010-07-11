@@ -4,7 +4,7 @@ class Drake_Data_Grid_Renderer extends Zend_View_Helper_HtmlElement
     /**
      * @var Drake_Data_Grid_Grid
      */
-    protected $grid;
+    protected $_grid;
 
     /**
      * Set the grid
@@ -14,7 +14,7 @@ class Drake_Data_Grid_Renderer extends Zend_View_Helper_HtmlElement
      */
     public function setGrid(Drake_Data_Grid_Grid $grid)
     {
-        $this->grid = $grid;
+        $this->_grid = $grid;
     }
 
     /**
@@ -24,7 +24,7 @@ class Drake_Data_Grid_Renderer extends Zend_View_Helper_HtmlElement
      */
     public function getGrid()
     {
-        return $this->grid;
+        return $this->_grid;
     }
 
     /**

@@ -26,42 +26,42 @@ class Drake_Data_Grid_Column_Column
     /**
      * @var Drake_Data_Grid_Column_Filter_FilterAbstract
      */
-    protected $filter;
+    protected $_filter;
 
     /**
      * @var Drake_Data_Grid_Grid
      */
-    protected $grid;
+    protected $_grid;
 
     /**
      * @var string
      */
-    protected $id;
+    protected $_id;
 
     /**
      * @var string
      */
-    protected $name;
+    protected $_name;
 
     /**
      * @var int
      */
-    protected $order = 0;
+    protected $_order = 0;
 
     /**
      * @var Drake_Data_Grid_Column_Renderer_RendererAbstract
      */
-    protected $renderer;
+    protected $_renderer;
 
     /**
      * @var string
      */
-    protected $rowField;
+    protected $_rowField;
 
     /**
      * @var string
      */
-    protected $type = 'generic';
+    protected $_type = 'generic';
 
     /**
      * Constructor
@@ -113,7 +113,7 @@ class Drake_Data_Grid_Column_Column
      */
     public function setId($id)
     {
-        $this->id = $id;
+        $this->_id = $id;
     }
 
     /**
@@ -123,7 +123,7 @@ class Drake_Data_Grid_Column_Column
      */
     public function getId()
     {
-        return $this->id;
+        return $this->_id;
     }
 
     /**
@@ -134,7 +134,7 @@ class Drake_Data_Grid_Column_Column
      */
     public function setName($name)
     {
-        $this->name = $name;
+        $this->_name = $name;
     }
 
     /**
@@ -144,7 +144,7 @@ class Drake_Data_Grid_Column_Column
      */
     public function getName()
     {
-        return $this->name;
+        return $this->_name;
     }
 
     /**
@@ -156,7 +156,7 @@ class Drake_Data_Grid_Column_Column
      */
     public function setRowField($rowField)
     {
-        $this->rowField = $rowField;
+        $this->_rowField = $rowField;
     }
 
     /**
@@ -166,7 +166,7 @@ class Drake_Data_Grid_Column_Column
      */
     public function getRowField()
     {
-        return $this->rowField;
+        return $this->_rowField;
     }
 
     /**
@@ -177,7 +177,7 @@ class Drake_Data_Grid_Column_Column
     public function setType($type)
     {
         $type = Drake_Util_StringInflector::underscore($type);
-        $this->type = $type;
+        $this->_type = $type;
     }
 
     /**
@@ -187,7 +187,7 @@ class Drake_Data_Grid_Column_Column
      */
     public function getType()
     {
-        return $this->type;
+        return $this->_type;
     }
 
     /**
@@ -198,7 +198,7 @@ class Drake_Data_Grid_Column_Column
      */
     public function setOrder($order)
     {
-        $this->order = $order;
+        $this->_order = $order;
     }
 
     /**
@@ -208,7 +208,7 @@ class Drake_Data_Grid_Column_Column
      */
     public function getOrder()
     {
-        return $this->order;
+        return $this->_order;
     }
 
     /**
@@ -219,7 +219,7 @@ class Drake_Data_Grid_Column_Column
      */
     public function setGrid(Drake_Data_Grid_Grid $grid)
     {
-        $this->grid = $grid;
+        $this->_grid = $grid;
     }
 
     /**
@@ -229,7 +229,7 @@ class Drake_Data_Grid_Column_Column
      */
     public function getGrid()
     {
-        return $this->grid;
+        return $this->_grid;
     }
 
     /**
@@ -246,7 +246,7 @@ class Drake_Data_Grid_Column_Column
             $this->getGrid()->addColumnRenderer($renderer);
         }
         
-        $this->renderer = $renderer;
+        $this->_renderer = $renderer;
     }
 
     /**
@@ -257,11 +257,11 @@ class Drake_Data_Grid_Column_Column
      */
     public function getRenderer()
     {
-        if (null === $this->renderer) {
+        if (null === $this->_renderer) {
             $renderer = new $this->_getRendererByType();
             $this->setRenderer($renderer);
         }
-        return $this->renderer;
+        return $this->_renderer;
     }
 
     /**
@@ -311,7 +311,7 @@ class Drake_Data_Grid_Column_Column
             $this->getGrid()->addColumnFilter($filter);
         }
         
-        $this->filter = $filter;
+        $this->_filter = $filter;
     }
 
     /**
@@ -322,11 +322,11 @@ class Drake_Data_Grid_Column_Column
      */
     public function getFilter()
     {
-        if (null === $this->filter) {
+        if (null === $this->_filter) {
             $filter = new $this->_getFilterByType();
             $this->setFilter($filter);
         }
-        return $this->filter;
+        return $this->_filter;
     }
 
     /**
