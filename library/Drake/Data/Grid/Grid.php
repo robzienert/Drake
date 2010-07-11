@@ -1,10 +1,53 @@
 <?php
+/**
+ * Drake Framework
+ *
+ * This source file is subject to the new BSD license that is bundled with this
+ * package in the file LICENSE.
+ *
+ * @category    Drake
+ * @package     Drake_Data
+ * @subpackage  Grid
+ * @copyright   Copyright (c) 2008-2010 Rob Zienert (http://robzienert.com)
+ * @license     http://www.opensource.org/licenses/bsd-license.php New BSD License
+ */
+
+/**
+ * A data grid viewer
+ *
+ * Inspired by Magento's Adminhtml Grid Widget.
+ *
+ * @category    Drake
+ * @package     Drake_Data
+ * @subpackage  Grid
+ * @copyright   Copyright (c) 2008-2010 Rob Zienert (http://robzienert.com)
+ * @license     http://www.opensource.org/licenses/bsd-license.php New BSD License
+ */
 class Drake_Data_Grid_Grid
 {
+    /**
+     * @var array
+     */
     protected $columns = array();
+
+    /**
+     * @var array
+     */
     protected $columnFilters = array();
+
+    /**
+     * @var array
+     */
     protected $columnRenderers = array();
+
+    /**
+     * @var array
+     */
     protected $data = array();
+
+    /**
+     * @var string
+     */
     protected $emptyText = 'No record found.';
 
     /**
@@ -149,6 +192,12 @@ class Drake_Data_Grid_Grid
         return count($this->columns);
     }
 
+    /**
+     * Add a column renderer to the internal cache
+     *
+     * @param Drake_Data_Grid_Column_Renderer_RendererAbstract $renderer
+     * @return void
+     */
     public function addColumnRenderer(Drake_Data_Grid_Column_Renderer_RendererAbstract $renderer)
     {
         $name = $renderer->getName();
@@ -159,6 +208,13 @@ class Drake_Data_Grid_Grid
         $this->columnRenderers[$name] = $renderer;
     }
 
+    /**
+     * Get a column renderer from the internal cache. If it does not exist, this
+     * will return false.
+     *
+     * @param string $name
+     * @return Drake_Data_Grid_Column_Renderer_RendererAbstract|false
+     */
     public function getColumnRenderer($name)
     {
         $name = Drake_Util_StringInflector::underscore($name);
@@ -168,11 +224,22 @@ class Drake_Data_Grid_Grid
         return false;
     }
 
+    /**
+     * Get all registered column renderers.
+     *
+     * @return array
+     */
     public function getColumnRenderers()
     {
         return $this->columnRenderers;
     }
 
+    /**
+     * Remove a registered column renderer.
+     *
+     * @param string $name
+     * @return void
+     */
     public function removeColumnRenderer($name)
     {
         $name = Drake_Util_StringInflector::underscore($name);
@@ -181,6 +248,12 @@ class Drake_Data_Grid_Grid
         }
     }
 
+    /**
+     * Add a column filter to the internal cache
+     *
+     * @param Drake_Data_Grid_Column_Filter_FilterAbstract $renderer
+     * @return void
+     */
     public function addColumnFilter(Drake_Data_Grid_Column_Filter_FilterAbstract $filter)
     {
         $name = $filter->getName();
@@ -191,6 +264,13 @@ class Drake_Data_Grid_Grid
         $this->columnFilters[$name] = $filter;
     }
 
+    /**
+     * Get a column filter from the internal cache. If it does not exist, this
+     * will return false.
+     *
+     * @param string $name
+     * @return Drake_Data_Grid_Column_Filter_FilterAbstract|false
+     */
     public function getColumnFilter($name)
     {
         $name = Drake_Util_StringInflector::underscore($name);
@@ -200,11 +280,22 @@ class Drake_Data_Grid_Grid
         return false;
     }
 
+    /**
+     * Get all registered column filters.
+     *
+     * @return array
+     */
     public function getColumnFilters()
     {
         return $this->columnFilters;
     }
 
+    /**
+     * Remove a registered column filter.
+     *
+     * @param string $name
+     * @return void
+     */
     public function removeColumnFilter($name)
     {
         $name = Drake_Util_StringInflector::underscore($name);
