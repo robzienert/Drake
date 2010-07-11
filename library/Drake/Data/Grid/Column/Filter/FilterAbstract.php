@@ -16,8 +16,19 @@ abstract class Drake_Data_Grid_Column_Filter_FilterAbstract
         return $this->type;
     }
 
-    public function setCallback(Zend_Filter_Interface $callback)
+    public function setCallback($callback)
     {
+        if (is_array($callback) && !is_callable($callback)) {
+            throw new InvalidArgumentException(
+                "Provided callback is not callable!");
+        } elseif (!$callback instanceof Zend_Filter_Interface) {
+            throw new InvalidArgumentException(
+                "Provided callback is not an instance of Zend_Filter_Interface");
+        } else {
+            throw new InvalidArgumentException(
+                "Callback must be a valid callback array or an instance of Zend_Filter_Interface");
+        }
+
         $this->callback = $callback;
     }
 
@@ -29,7 +40,7 @@ abstract class Drake_Data_Grid_Column_Filter_FilterAbstract
     public function filter($value)
     {
         if ($this->getCallback()) {
-            return $this->getCallback()->filter($value);
+            return call_user_func($this->getCallback(), $value);
         }
         return $this->_filter($value);
     }

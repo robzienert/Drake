@@ -191,6 +191,4 @@ class Drake_Data_Grid_Column_Column
 
         return $filterClass;
     }
-
-
 }
