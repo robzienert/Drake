@@ -25,17 +25,17 @@ abstract class Drake_Model_ModelAbstract extends Drake_Model_ModelAbstract
     /**
      * @var Zend_Acl
      */
-    protected $acl;
+    protected $_acl;
 
     /**
      * @var Zend_Acl
      */
-    protected static $defaultAcl;
+    protected static $_defaultAcl;
 
     /**
      * @var string The ACL resource name
      */
-    protected $resourceId;
+    protected $_resourceId;
 
     /**
      * Construct
@@ -63,9 +63,9 @@ abstract class Drake_Model_ModelAbstract extends Drake_Model_ModelAbstract
      */
     public function setAcl(Zend_Acl $acl)
     {
-        $this->acl = $acl;
-        if (!$this->acl->hasResource($this)) {
-            $this->acl->add($acl);
+        $this->_acl = $acl;
+        if (!$this->_acl->hasResource($this)) {
+            $this->_acl->add($acl);
         }
         $this->_initAcl();
     }
@@ -79,13 +79,13 @@ abstract class Drake_Model_ModelAbstract extends Drake_Model_ModelAbstract
      */
     public function getAcl()
     {
-        if (null === $this->acl) {
+        if (null === $this->_acl) {
             if (null === ($acl = self::getDefaultAcl())) {
                 throw new LogicException("No ACL or default ACL defined!");
             }
             $this->setAcl($acl);
         }
-        return $this->acl;
+        return $this->_acl;
     }
 
     /**
@@ -107,7 +107,7 @@ abstract class Drake_Model_ModelAbstract extends Drake_Model_ModelAbstract
      */
     public function setResourceId($resourceId)
     {
-        $this->resourceId = $resourceId;
+        $this->_resourceId = $resourceId;
     }
 
     /**
@@ -123,7 +123,7 @@ abstract class Drake_Model_ModelAbstract extends Drake_Model_ModelAbstract
      */
     public function getResourceId()
     {
-        if (null === $this->resourceId) {
+        if (null === $this->_resourceId) {
             $filter = new Zend_Filter_Work_SeparatorToSeparator('_', '.');
             $className = strtolower(get_class($this));
             $resourceId = 'model:' . $filter->filter(
@@ -132,7 +132,7 @@ abstract class Drake_Model_ModelAbstract extends Drake_Model_ModelAbstract
             $this->setResourceId($resourceId);
         }
 
-        return $this->resourceId;
+        return $this->_resourceId;
     }
 
     /**
@@ -155,7 +155,7 @@ abstract class Drake_Model_ModelAbstract extends Drake_Model_ModelAbstract
      */
     public static function setDefaultAcl(Zend_Acl $acl)
     {
-        self::$defaultAcl = $acl;
+        self::$_defaultAcl = $acl;
     }
 
     /**
@@ -165,6 +165,6 @@ abstract class Drake_Model_ModelAbstract extends Drake_Model_ModelAbstract
      */
     public static function getDefaultAcl()
     {
-        return self::$defaultAcl;
+        return self::$_defaultAcl;
     }
 }
