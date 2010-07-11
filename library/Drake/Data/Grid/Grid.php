@@ -325,9 +325,11 @@ class Drake_Data_Grid_Grid
                     $order = $column->getOrder();
                     while (isset($row[$order])) {
                         $order += 0.01;
+                        $column->setOrder($order);
                     }
                     $row[$order] = $column->render($data[$column->getRowField()]);
                 }
+                ksort($row);
             }
             $preparedRows[] = $row;
         }
