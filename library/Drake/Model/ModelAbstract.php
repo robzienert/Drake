@@ -36,7 +36,7 @@ abstract class Drake_Model_ModelAbstract
     public function __set($name, $value)
     {
         if ('_' != $name[0]) {
-            $method = 'set' . ucfirst($name);
+            $method = $this->_inflectPropertyToMethod($name, 'set');
             if (method_exists($this, $method)) {
                 return $this->$method($value);
             }
@@ -64,7 +64,7 @@ abstract class Drake_Model_ModelAbstract
     public function __get($name)
     {
         if ('_' != $name[0]) {
-            $method = 'get'. ucfirst($name);
+            $method = $this->_inflectPropertyToMethod($name);
             if (method_exists($this, $method)) {
                 return $this->$method();
             }
@@ -91,17 +91,50 @@ abstract class Drake_Model_ModelAbstract
     {
         if (strlen($name) > 3) {
             if (0 === strpos($name, 'set')) {
-                $property = lcfirst(substr($name, 3));
+                $property = $this->_inflectMethodToProperty($name);
                 $this->$property = array_shift($arguments);
                 return $this;
             }
 
             if (0 === strpos($name, 'get')) {
-                $property = lcfirst(substr($name, 3));
+                $property = $this->_inflectMethodToProperty($name);
                 return $this->$property;
             }
         }
 
         throw new BadMethodCallException("No method named `$name` exists");
+    }
+
+    /**
+     * Inflects a given property to it's method equivalent. A prefix can be
+     * provided to make the method a mutator or accessor easily, which defaults
+     * to an accessor.
+     *
+     * @param string $property
+     * @param string $prefix
+     * @return string
+     */
+    protected function _inflectPropertyToMethod($property, $prefix = 'get')
+    {
+        $filter = new Zend_Filter_Word_UnderscoreToCamelCase();
+        $method = $prefix . ucfirst($filter->filter($property));
+        return $method;
+    }
+
+    /**
+     * Inflects a given method to it's property equivalent. This expects that
+     * the method has a prefix attached to it, and will trim the first three
+     * characters, unless another value is given by $prefixCount.
+     *
+     * @param string $method
+     * @param integer $prefixCount
+     * @return string
+     */
+    protected function _inflectMethodToProperty($method, $prefixCount = 3)
+    {
+        $filter = new Zend_Filter_Word_CamelCaseToUnderscore();
+        $property = substr($method, $prefixCount);
+        $property = strtolower($filter->filter($property));
+        return $property;
     }
 }
