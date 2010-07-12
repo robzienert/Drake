@@ -111,6 +111,8 @@ class Drake_Controller_Plugin_Acl extends Zend_Controller_Plugin_Abstract
         $userService = $container->userService;
         $role = $userService->getActiveUser()->getRoleId();
 
+        $isAllowed = $this->acl->isAllowed($role, $resource);
+
         if (!$isAllowed && !Zend_Auth::getInstance()->hasIdentity()) {
             $this->acl->allow(null,
                 $this->_getResource(
@@ -139,7 +141,10 @@ class Drake_Controller_Plugin_Acl extends Zend_Controller_Plugin_Abstract
                     $this->getAccessDeniedModule(),
                     $this->getAccessDeniedController()),
                 $this->getAccessDeniedAction());
-            $request->setModuleName($this->getAccessDeniedModule())
+
+            $request
+                ->setParam('error_handler', $error)
+                ->setModuleName($this->getAccessDeniedModule())
                 ->setControllerName($this->getAccessDeniedController())
                 ->setActionName($this->getActionName())
                 ->setDispatched(false);
