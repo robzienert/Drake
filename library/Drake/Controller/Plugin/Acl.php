@@ -146,7 +146,7 @@ class Drake_Controller_Plugin_Acl extends Zend_Controller_Plugin_Abstract
                 ->setParam('error_handler', $error)
                 ->setModuleName($this->getAccessDeniedModule())
                 ->setControllerName($this->getAccessDeniedController())
-                ->setActionName($this->getActionName())
+                ->setActionName($this->getAccessDeniedAction())
                 ->setDispatched(false);
         }
     }
