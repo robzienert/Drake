@@ -10,22 +10,17 @@ defined('APPLICATION_ENV')
 
 // Ensure library/ is on include_path
 set_include_path(implode(PATH_SEPARATOR, array(
-    realpath(APPLICATION_PATH . '/../../library'),
+    realpath(APPLICATION_PATH . '/../library'),
     get_include_path(),
 )));
 
-/** Drake_Application */
-require_once 'Drake/Application.php';
+/** Zend_Application */
+require_once 'Zend/Application.php';
 
 // Create application, bootstrap, and run
-$application = new Drake_Application(
+$application = new Zend_Application(
     APPLICATION_ENV,
-    array(
-        'configFile' => APPLICATION_PATH . '/configs/application.ini',
-        'cacheOptions' => array(
-            'enabled' => 'production' === APPLICATION_ENV,
-        ),
-    )
+    APPLICATION_PATH . '/configs/application.ini'
 );
 $application->bootstrap()
             ->run();

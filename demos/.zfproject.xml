@@ -16,21 +16,7 @@
       <formsDirectory enabled="false"/>
       <layoutsDirectory enabled="false"/>
       <modelsDirectory/>
-      <modulesDirectory enabled="false">
-        <moduleDirectory moduleName="admin">
-          <apisDirectory enabled="false"/>
-          <configsDirectory enabled="false"/>
-          <controllersDirectory/>
-          <formsDirectory enabled="false"/>
-          <layoutsDirectory enabled="false"/>
-          <modelsDirectory/>
-          <viewsDirectory>
-            <viewScriptsDirectory/>
-            <viewHelpersDirectory/>
-            <viewFiltersDirectory/>
-          </viewsDirectory>
-        </moduleDirectory>
-      </modulesDirectory>
+      <modulesDirectory enabled="false"/>
       <viewsDirectory>
         <viewScriptsDirectory>
           <viewControllerScriptsDirectory forControllerName="Index">

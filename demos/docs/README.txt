@@ -15,7 +15,7 @@ The following is a sample VHOST you might want to consider for your project.
 
 <VirtualHost *:80>
    DocumentRoot "/usr/local/zend/apache2/htdocs/Libraries/Drake/demos/public"
-   ServerName drake.local
+   ServerName demos.local
 
    # This should be omitted in the production environment
    SetEnv APPLICATION_ENV development
