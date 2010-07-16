@@ -127,7 +127,7 @@ abstract class Drake_Model_AccessibleModelAbstract extends Drake_Model_ModelAbst
             $filter = new Zend_Filter_Work_SeparatorToSeparator('_', '.');
             $className = strtolower(get_class($this));
             $resourceId = 'model:' . $filter->filter(
-                str_replace('model', '', $className));
+                str_replace('_model', '', $className));
             
             $this->setResourceId($resourceId);
         }
