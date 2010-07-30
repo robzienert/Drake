@@ -87,10 +87,12 @@ class Drake_Application extends Zend_Application
             ), $backendOptions)
         );
 
-        $config = $cache->load('Zend_Application_Config');
+        $cacheId = 'Zend_Application_Config_' . APPLICATION_ENV;
+
+        $config = $cache->load($cacheId);
         if (!$config) {
             $config = parent::_loadConfig($file);
-            $cache->save($config, 'Zend_Application_Config');
+            $cache->save($config, $cacheId);
         }
 
         return $config;
