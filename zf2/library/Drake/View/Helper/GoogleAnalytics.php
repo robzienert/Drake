@@ -37,35 +37,35 @@ class GoogleAnalytics extends \Zend\View\Helper\AbstractHelper
      *
      * @var string
      */
-    protected static $_defaultTrackerId;
+    protected static $defaultTrackerId;
 
     /**
      * Set tracker id
      *
      * @var string
      */
-    protected $_trackerId;
+    protected $trackerId;
 
     /**
      * The pageview options stack
      *
      * @var array
      */
-    protected $_pageviewStack = array();
+    protected $pageviewStack = array();
 
     /**
      * The transaction options stack
      *
      * @var array
      */
-    protected $_transStack = array();
+    protected $transStack = array();
 
     /**
      * Valid tracker options
      *
      * @var array
      */
-    protected $_validOptions = array(
+    protected $validOptions = array(
         // Client detection
         '_setClientInfo',
         '_setAllowHash',
@@ -139,15 +139,15 @@ class GoogleAnalytics extends \Zend\View\Helper\AbstractHelper
         $xhtml[] = 'var _gaq = _gaq || [];';
         $xhtml[] = "_gaq.push(['_setAccount', '" . $this->getTrackerId() . "']);";
 
-        foreach ($this->_pageviewStack as $option) {
+        foreach ($this->pageviewStack as $option) {
             $xhtml[] = $option;
         }
 
         $xhtml[] = "_gaq.push(['_trackPageview']);";
         $xhtml[] = '';
 
-        if (!empty($this->_transStack)) {
-            foreach ($this->_transStack as $option) {
+        if (!empty($this->transStack)) {
+            foreach ($this->transStack as $option) {
                 $xhtml[] = $option;
             }
             $xhtml[] = "_gaq.push(['_trackTrans']);";
@@ -176,7 +176,7 @@ class GoogleAnalytics extends \Zend\View\Helper\AbstractHelper
      */
     public function setOption($name, $args = null, $stack = self::STACK_PAGEVIEW)
     {
-        if (!in_array($name, $this->_validOptions)) {
+        if (!in_array($name, $this->validOptions)) {
             throw new RuntimeException("Invalid GA option, '$name' provided!");
         }
 
@@ -188,7 +188,7 @@ class GoogleAnalytics extends \Zend\View\Helper\AbstractHelper
             }
 
             foreach ($args as &$arg) {
-                $arg = $this->_quoteArg($arg);
+                $arg = $this->quoteArg($arg);
             }
 
             $args = ', ' . implode(', ', $args);
@@ -242,7 +242,7 @@ class GoogleAnalytics extends \Zend\View\Helper\AbstractHelper
      */
     public function setTrackerId($trackerId)
     {
-        $this->_trackerId = $trackerId;
+        $this->trackerId = $trackerId;
     }
 
     /**
@@ -253,7 +253,7 @@ class GoogleAnalytics extends \Zend\View\Helper\AbstractHelper
      */
     public function getTrackerId()
     {
-        if (null === ($tracker = $this->_trackerId)) {
+        if (null === ($tracker = $this->trackerId)) {
             $tracker = self::getDefaultTrackerId();
             if (null === $tracker) {
                 throw new RuntimeException('GA Tracker ID has not been set!');
@@ -269,7 +269,7 @@ class GoogleAnalytics extends \Zend\View\Helper\AbstractHelper
      */
     public static function setDefaultTrackerId($trackerId)
     {
-        self::$_defaultTrackerId = $trackerId;
+        self::$defaultTrackerId = $trackerId;
     }
 
     /**
@@ -279,6 +279,6 @@ class GoogleAnalytics extends \Zend\View\Helper\AbstractHelper
      */
     public static function getDefaultTrackerId()
     {
-        return self::$_defaultTrackerId;
+        return self::$defaultTrackerId;
     }
 }

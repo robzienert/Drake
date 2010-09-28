@@ -39,9 +39,9 @@ class Ax extends \Zend\OpenId\Extension
     const NAMESPACE_1_0 = 'http://openid.net/srv/ax/1.0';
     const MODE = 'fetch_request';
 
-    private $_props;
-    private $_policy_url;
-    private $_version;
+    private $props;
+    private $policy_url;
+    private $version;
 
     /**
      * Creates AX extension object
@@ -53,9 +53,9 @@ class Ax extends \Zend\OpenId\Extension
      */
     public function __construct(array $props=null, $policy_url=null, $version=1.0)
     {
-        $this->_props = $props;
-        $this->_policy_url = $policy_url;
-        $this->_version = $version;
+        $this->props = $props;
+        $this->policy_url = $policy_url;
+        $this->version = $version;
     }
 
     /**
@@ -64,8 +64,8 @@ class Ax extends \Zend\OpenId\Extension
      * @return array
      */
     public function getProperties() {
-        if (is_array($this->_props)) {
-            return $this->_props;
+        if (is_array($this->props)) {
+            return $this->props;
         } else {
             return array();
         }
@@ -77,7 +77,7 @@ class Ax extends \Zend\OpenId\Extension
      * @return float
      */
     public function getVersion() {
-        return $this->_version;
+        return $this->version;
     }
 
     /**
@@ -111,8 +111,8 @@ class Ax extends \Zend\OpenId\Extension
     {
         $tproperties = self::getAxProperties();
         
-        if (is_array($this->_props) && count($this->_props) > 0) {
-            foreach ($this->_props as $prop => $req) {
+        if (is_array($this->props) && count($this->props) > 0) {
+            foreach ($this->props as $prop => $req) {
                 if ($req) {
                     
                     if (isset($required)) {
@@ -155,7 +155,7 @@ class Ax extends \Zend\OpenId\Extension
      */
     public function parseRequest($params)
     {
-        $this->_version= 1.0;
+        $this->version= 1.0;
 
         $props = array();
         if (!empty($params['openid_ax_optional'])) {
@@ -177,7 +177,7 @@ class Ax extends \Zend\OpenId\Extension
             }
         }
 
-        $this->_props = (count($props2) > 0) ? $props2 : null;
+        $this->props = (count($props2) > 0) ? $props2 : null;
         return true;
     }
 
@@ -189,13 +189,13 @@ class Ax extends \Zend\OpenId\Extension
      */
     public function prepareResponse(&$params)
     {
-        if (is_array($this->_props) && count($this->_props) > 0) {
+        if (is_array($this->props) && count($this->props) > 0) {
 
            $params['openid.ns.ax'] = Ax::NAMESPACE_1_0;
             
             foreach (self::getAxProperties() as $prop=>$value) {
-                if (!empty($this->_props[$prop])) {
-                    $params['openid.ax.type.' . $prop] = $this->_props[$prop];
+                if (!empty($this->props[$prop])) {
+                    $params['openid.ax.type.' . $prop] = $this->props[$prop];
                 }
             }
         }
@@ -212,7 +212,7 @@ class Ax extends \Zend\OpenId\Extension
     public function parseResponse($params)
     {
 
-        $this->_version= 1.0;
+        $this->version= 1.0;
 
         $props = array();
         foreach (self::getAxProperties() as $prop=>$type) {
@@ -221,16 +221,16 @@ class Ax extends \Zend\OpenId\Extension
             }
         }
 
-        if (isset($this->_props) && is_array($this->_props)) {
+        if (isset($this->props) && is_array($this->props)) {
             foreach (self::getAxProperties() as $prop=>$type) {
-                if (isset($this->_props[$prop]) &&
-                    $this->_props[$prop] &&
+                if (isset($this->props[$prop]) &&
+                    $this->props[$prop] &&
                     !isset($props[$prop])) {
                     return false;
                 }
             }
         }
-        $this->_props = (count($props) > 0) ? $props : null;
+        $this->props = (count($props) > 0) ? $props : null;
         return true;
     }
 
@@ -257,7 +257,7 @@ class Ax extends \Zend\OpenId\Extension
      */
     public function checkTrustData($data)
     {
-        if (is_array($this->_props) && count($this->_props) > 0) {
+        if (is_array($this->props) && count($this->props) > 0) {
             $props = array();
             $name = get_class();
             if (isset($data[$name])) {
@@ -266,7 +266,7 @@ class Ax extends \Zend\OpenId\Extension
                 $props = array();
             }
             $props2 = array();
-            foreach ($this->_props as $prop => $req) {
+            foreach ($this->props as $prop => $req) {
                 if (empty($props[$prop])) {
                     if ($req) {
                         return false;
@@ -275,7 +275,7 @@ class Ax extends \Zend\OpenId\Extension
                     $props2[$prop] = $props[$prop];
                 }
             }
-            $this->_props = (count($props2) > 0) ? $props2 : null;
+            $this->props = (count($props2) > 0) ? $props2 : null;
         }
         return true;
     }
