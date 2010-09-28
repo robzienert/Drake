@@ -1,0 +1,14 @@
+<phpunit>
+	<testsuite name="Drake test suite">
+		<directory>./</directory>
+	</testsuite>
+
+	<filter>
+		<whitelist>
+			<directory suffix=".php">../library/</directory>
+		</whitelist>
+	</filter>
+
+	<logging>
+	</logging>
+</phpunit>
