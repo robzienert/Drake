@@ -20,12 +20,17 @@
  */
 
 /**
+ * @namespace
+ */
+namespace Ak33m\OpenId\Extension;
+
+/**
  * Attributes Exchange Extension. 
  *
  * @author Akeem Philbert <akeem.philbert@gmail.com>
  * @copyright Copyright (c) 2009 Akeem Philbert
  */
-class Ak33m_OpenId_Extension_Ax extends Zend_OpenId_Extension
+class Ax extends \Zend\OpenId\Extension
 {
     /**
      * AX 1.0 namespace. All OpenID AX 1.0 messages MUST contain variable
@@ -126,8 +131,8 @@ class Ak33m_OpenId_Extension_Ax extends Zend_OpenId_Extension
                 $params['openid.ax.type.'.$prop] = $tproperties[$prop];
             }
          
-            $params['openid.ns.ax'] = Ak33m_OpenId_Extension_Ax::NAMESPACE_1_0;
-            $params['openid.ax.mode'] = Ak33m_OpenId_Extension_Ax::MODE;
+            $params['openid.ns.ax'] = Ax::NAMESPACE_1_0;
+            $params['openid.ax.mode'] = Ax::MODE;
 
             if (!empty($required)) {
                 $params['openid.ax.required'] = $required;
@@ -186,7 +191,7 @@ class Ak33m_OpenId_Extension_Ax extends Zend_OpenId_Extension
     {
         if (is_array($this->_props) && count($this->_props) > 0) {
 
-           $params['openid.ns.ax'] = Ak33m_OpenId_Extension_Ax::NAMESPACE_1_0;
+           $params['openid.ns.ax'] = Ax::NAMESPACE_1_0;
             
             foreach (self::getAxProperties() as $prop=>$value) {
                 if (!empty($this->_props[$prop])) {

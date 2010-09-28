@@ -12,6 +12,11 @@
  */
 
 /**
+ * @namespace
+ */
+namespace Drake\Controller\Action\Helper;
+
+/**
  * Exception interface
  *
  * @category    Drake
@@ -20,6 +25,6 @@
  * @copyright   Copyright (c) 2008-2010 Rob Zienert (http://robzienert.com)
  * @license     http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-interface Drake_Controller_Action_Helper_Exception extends Drake_Exception
+interface Exception
 {
 }

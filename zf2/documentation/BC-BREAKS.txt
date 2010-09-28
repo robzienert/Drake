@@ -1,0 +1,41 @@
+Drake_Application
+---------------------------------------
+- Drake_Application_Resource_Plugin: Removed
+- Drake_Application_Resource_ViewAbstract: merged into Drake\Application\Resource\View
+- Drake_Application_Resource_ViewXslt: Removed
+
+Drake_Auth
+----------
+- Drake_Auth_PrefManager: Removed
+
+Drake_Controller
+----------------
+- Drake_Controller_Plugin_PageHistory: Removed
+
+Drake_Event
+-----------
+- Removed
+
+Drake_Model
+-----------
+- Drake_Model_ModelAbstract renamed to Drake\Model\AbstractModel
+- Drake_Model_AccessibleModelAbstract renamed to Drake\Model\AbstractAccessibleModel
+
+Drake_Object
+------------
+- Removed
+
+Drake_Plugin
+------------
+- Removed
+
+Drake_Trait
+-----------
+- Removed
+
+Drake_Util
+----------
+- Renamed to Drake\Stdlib
+
+Drake_View
+----------

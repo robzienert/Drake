@@ -1,0 +1,1 @@
+php php-namespacer.php --lib=/usr/local/zend/apache2/htdocs/Libraries/Drake/zf2/library --prefixes=Ak33m,Drake --map=/usr/local/zend/apache2/htdocs/Libraries/Drake/zf2/documentation --out=/usr/local/zend/apache2/htdocs/Libraries/Drake/zf2/library

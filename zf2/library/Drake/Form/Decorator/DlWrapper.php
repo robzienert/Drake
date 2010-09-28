@@ -12,6 +12,11 @@
  */
 
 /**
+ * @namespace
+ */
+namespace Drake\Form\Decorator;
+
+/**
  * DlWrapper for elements
  *
  * @category    Drake
@@ -20,14 +25,14 @@
  * @copyright   Copyright (c) 2008-2010 Rob Zienert (http://robzienert.com)
  * @license     http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-class Drake_Form_Decorator_DlWrapper extends Zend_Form_Decorator_Abstract
+class DlWrapper extends \Zend\Form\Decorator\AbstractDecorator
 {
     /**
      * Default placement; surround content
      *
      * @var string
      */
-    protected $_placement = null;
+    protected $placement = null;
 
     /**
      * A DL around an element

@@ -13,6 +13,11 @@
  */
 
 /**
+ * @namespace
+ */
+namespace Drake\Filter\File;
+
+/**
  * Renames files to a reversable hash.
  *
  * This method is an improvement over a straight one-way hash; providing a
@@ -25,17 +30,17 @@
  * @copyright   Copyright (c) 2008-2010 Rob Zienert (http://robzienert.com)
  * @license     http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-class Drake_Filter_File_RenameBase64 extends Zend_Filter_File_Rename
+class RenameBase64 extends \Zend\Filter\File\Rename
 {
     /**
      * @var array Seed data
      */
-    protected $_seedData = array();
+    protected $seedData = array();
 
     /**
      * @var string Seed separator
      */
-    protected $_seedSeparator = ',';
+    protected $seedSeparator = ',';
 
     /**
      * Overloaded target file functionality which hashes the filename in a
@@ -50,7 +55,7 @@ class Drake_Filter_File_RenameBase64 extends Zend_Filter_File_Rename
 
         $targetInfo = pathinfo($rename['target']);
 
-        $hash = $this->_processSeed($targetInfo['filename']);
+        $hash = $this->processSeed($targetInfo['filename']);
         $rename['target'] = sprintf('%s/%s.%s',
                                     $targetInfo['dirname'],
                                     $hash,
@@ -71,7 +76,7 @@ class Drake_Filter_File_RenameBase64 extends Zend_Filter_File_Rename
         ), $this->getSeedData());
 
         $seed = implode($this->getSeedSeparator(), $seedData);
-        $hash = $this->_encodeBase64($seed);
+        $hash = $this->encodeBase64($seed);
 
         return $hash;
     }
@@ -98,7 +103,7 @@ class Drake_Filter_File_RenameBase64 extends Zend_Filter_File_Rename
      */
     public function setSeedData(array $data = array())
     {
-        $this->_seedData = $data;
+        $this->seedData = $data;
         return $this;
     }
 
@@ -109,7 +114,7 @@ class Drake_Filter_File_RenameBase64 extends Zend_Filter_File_Rename
      */
     public function getSeedData()
     {
-        return $this->_seedData;
+        return $this->seedData;
     }
 
     /**
@@ -123,11 +128,10 @@ class Drake_Filter_File_RenameBase64 extends Zend_Filter_File_Rename
     {
         if (!is_string($separator)) {
             $type = gettype($separator);
-            throw new Drake_Filter_File_InvalidArgumentException(
-                "Separator must be a string, '$type' given");
+            throw new \Drake\Filter\InvalidArgumentException("Separator must be a string, '$type' given");
         }
         
-        $this->_seedSeparator = (string) $separator;
+        $this->seedSeparator = (string) $separator;
         return $this;
     }
 
@@ -138,6 +142,6 @@ class Drake_Filter_File_RenameBase64 extends Zend_Filter_File_Rename
      */
     public function getSeedSeparator()
     {
-        return $this->_seedSeparator;
+        return $this->seedSeparator;
     }
 }

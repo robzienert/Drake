@@ -12,6 +12,11 @@
  */
 
 /**
+ * @namespace
+ */
+namespace Drake\Form;
+
+/**
  * Default display group
  *
  * @category    Drake
@@ -19,7 +24,7 @@
  * @copyright   Copyright (c) 2008-2010 Rob Zienert (http://robzienert.com)
  * @license     http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-class Drake_Form_DisplayGroup extends Zend_Form_DisplayGroup
+class DisplayGroup extends \Zend\Form\DisplayGroup
 {
     /**
      * Override: remove the dl HtmlTag decorator
@@ -35,8 +40,7 @@ class Drake_Form_DisplayGroup extends Zend_Form_DisplayGroup
         $decorators = $this->getDecorators();
         if (empty($decorators)) {
             $this->addDecorator('FormElements')
-//            ->addDecorator('HtmlTag', array('tag' => 'dl'))
-            ->addDecorator('Fieldset');
+                 ->addDecorator('Fieldset');
         }
     }
 }

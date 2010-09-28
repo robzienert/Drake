@@ -13,6 +13,16 @@
  */
 
 /**
+ * @namespace
+ */
+namespace Drake\Controller\Plugin;
+
+use Drake\Controller\Request,
+    ZendAcl as ZendAcl,
+    ZendAuth as ZendAuth,
+    ControllerFront as ControllerFront;
+
+/**
  * An ACL package taken heavily from the Xyster Framework by Jonathan Hawk.
  * Small changes made and actively maintained.
  *
@@ -24,7 +34,7 @@
  * @copyright   Copyright (c) 2008-2010 Rob Zienert (http://robzienert.com)
  * @license     http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-class Drake_Controller_Plugin_Acl extends Zend_Controller_Plugin_Abstract
+class Acl extends \Zend\Controller\Plugin\AbstractHelper
 {
     /**
      * @var Zend_Acl
@@ -35,44 +45,44 @@ class Drake_Controller_Plugin_Acl extends Zend_Controller_Plugin_Abstract
      * Action to use for errors; defaults to 'error'
      * @var string
      */
-    protected $_deniedAction = 'error';
+    protected $deniedAction = 'error';
 
     /**
      * Controller to use for errors; defaults to 'error'
      * @var string
      */
-    protected $_deniedController = 'error';
+    protected $deniedController = 'error';
 
     /**
      * Module to use for errors; defaults to default module in dispatcher
      * @var string
      */
-    protected $_deniedModule;
+    protected $deniedModule;
 
     /**
      * Action to use for login; defaults to 'index'
      * @var string
      */
-    protected $_loginAction = 'index';
+    protected $loginAction = 'index';
 
     /**
      * Controller to use for login; defaults to 'login'
      * @var string
      */
-    protected $_loginController = 'login';
+    protected $loginController = 'login';
 
     /**
      * Module to use for login; defaults to default module in dispatcher
      * @var string
      */
-    protected $_loginModule;
+    protected $loginModule;
 
     /**
      * Constructor
      *
      * @param Zend_Acl $acl
      */
-    public function __construct(Zend_Acl $acl)
+    public function __construct(ZendAcl $acl)
     {
         $this->setAcl($acl);
     }
@@ -82,7 +92,7 @@ class Drake_Controller_Plugin_Acl extends Zend_Controller_Plugin_Abstract
      *
      * @return void
      */
-    public function setAcl(Zend_Acl $acl)
+    public function setAcl(ZendAcl $acl)
     {
         $this->acl = $acl;
     }
@@ -93,18 +103,18 @@ class Drake_Controller_Plugin_Acl extends Zend_Controller_Plugin_Abstract
      * @param Zend_Controller_Request_Abstract $request
      * @return void
      */
-    public function preDispatch(Zend_Controller_Request_Abstract $request)
+    public function preDispatch(\Zend\Controller\Request\AbstractRequest $request)
     {
         if (!$this->acl) {
             return;
         }
 
-        $resource = $this->_getResource(
+        $resource = $this->getResource(
             $request->getModuleName(),
             $request->getControllerName());
         $privilege = $request->getActionName();
 
-        $container = Zend_Controller_Front::getInstance()
+        $container = ControllerFront::getInstance()
             ->getParam('bootstrap')
             ->getContainer();
 
@@ -113,9 +123,9 @@ class Drake_Controller_Plugin_Acl extends Zend_Controller_Plugin_Abstract
 
         $isAllowed = $this->acl->isAllowed($role, $resource);
 
-        if (!$isAllowed && !Zend_Auth::getInstance()->hasIdentity()) {
+        if (!$isAllowed && !ZendAuth::getInstance()->hasIdentity()) {
             $this->acl->allow(null,
-                $this->_getResource(
+                $this->getResource(
                     $this->getLoginModule(),
                     $this->getLoginController()),
                 $this->getLoginAction());
@@ -130,14 +140,14 @@ class Drake_Controller_Plugin_Acl extends Zend_Controller_Plugin_Abstract
             $message = 'Insufficient permissions: ';
             $message .= $role . ' -> ' . $resource->getResourceId();
 
-            $error = new ArrayObject(array(), ArrayObject::ARRAY_AS_PROPS);
-            $error->exception = new Zend_Acl_Exception($message);
+            $error = new \ArrayObject(array(), \ArrayObject::ARRAY_AS_PROPS);
+            $error->exception = new ZendAcl\AclException($message);
             $error->type = 'EXCEPTION_OTHER';
 
             $error->request = clone $request;
 
             $this->acl->allow(null,
-                $this->_getResource(
+                $this->getResource(
                     $this->getAccessDeniedModule(),
                     $this->getAccessDeniedController()),
                 $this->getAccessDeniedAction());
@@ -187,7 +197,7 @@ class Drake_Controller_Plugin_Acl extends Zend_Controller_Plugin_Abstract
     public function getAccessDeniedModule()
     {
         if (null === $this->deniedModule) {
-            $this->deniedModule = Zend_Controller_Front::getInstance()
+            $this->deniedModule = ControllerFront::getInstance()
                 ->getDispatcher()
                 ->getDefaultModule();
         }
@@ -222,7 +232,7 @@ class Drake_Controller_Plugin_Acl extends Zend_Controller_Plugin_Abstract
     public function getLoginModule()
     {
         if (null === $this->loginModule) {
-            $this->loginModule = Zend_Controller_Front::getInstance()
+            $this->loginModule = ControllerFront::getInstance()
                 ->getDispatcher()
                 ->getDefaultModule();
         }
@@ -260,14 +270,14 @@ class Drake_Controller_Plugin_Acl extends Zend_Controller_Plugin_Abstract
         $resource = null;
 
         if ($module) {
-            $moduleResource = new Drake_Controller_Request_Resource($module);
+            $moduleResource = new Request\Resource($module);
             if (!$this->acl->has($moduleResource)) {
                 $this->acl->add($moduleResource);
             }
             $resource = $moduleResource;
         }
         if ($module && $controller) {
-            $controllerResource = new Drake_Controller_Request_Resource(
+            $controllerResource = new Request\Resource(
                 $module,
                 $controller);
             if (!$this->acl->has($controllerResource)) {

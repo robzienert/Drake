@@ -13,6 +13,11 @@
  */
 
 /**
+ * @namespace
+ */
+namespace Drake\Controller\Request;
+
+/**
  * An ACL package taken heavily from the Xyster Framework by Jonathan Hawk.
  * Small changes made and actively maintained.
  *
@@ -24,7 +29,7 @@
  * @copyright   Copyright (c) 2008-2010 Rob Zienert (http://robzienert.com)
  * @license     http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-class Drake_Controller_Request_Resource implements Zend_Acl_Resource_Interface
+class Resource implements \Zend\Acl\Resource
 {
     /**
      * @var string

@@ -12,6 +12,11 @@
  */
 
 /**
+ * @namespace
+ */
+namespace Drake\Application\Resource;
+
+/**
  * RuntimeException
  *
  * @category    Drake
@@ -20,7 +25,6 @@
  * @copyright   Copyright (c) 2008-2010 Rob Zienert (http://robzienert.com)
  * @license     http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-class Drake_Application_Resource_RuntimeException extends RuntimeException
-    implements Drake_Application_Resource_Exception
+class RuntimeException extends \RuntimeException implements Exception
 {
 }

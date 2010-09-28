@@ -13,6 +13,11 @@
  */
 
 /**
+ * @namespace
+ */
+namespace Drake\View\Helper;
+
+/**
  * A push Google Analytics view helper; based off of the view helper originally
  * developed by Harold Thétiot (http://hthetiot.blogspot.com/).
  *
@@ -22,7 +27,7 @@
  * @copyright   Copyright (c) 2008-2010 Rob Zienert (http://robzienert.com)
  * @license     http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-class Drake_View_Helper_GoogleAnalytics extends Zend_View_Helper_Abstract
+class GoogleAnalytics extends \Zend\View\Helper\AbstractHelper
 {
     const STACK_PAGEVIEW = 'pageview';
     const STACK_TRANS = 'trans';
@@ -172,7 +177,7 @@ class Drake_View_Helper_GoogleAnalytics extends Zend_View_Helper_Abstract
     public function setOption($name, $args = null, $stack = self::STACK_PAGEVIEW)
     {
         if (!in_array($name, $this->_validOptions)) {
-            throw new Drake_View_Helper_RuntimeException("Invalid GA option, '$name' provided!");
+            throw new RuntimeException("Invalid GA option, '$name' provided!");
         }
 
         $push = "_gaq.push(['$name'";
@@ -251,7 +256,7 @@ class Drake_View_Helper_GoogleAnalytics extends Zend_View_Helper_Abstract
         if (null === ($tracker = $this->_trackerId)) {
             $tracker = self::getDefaultTrackerId();
             if (null === $tracker) {
-                throw new Drake_View_Helper_RuntimeException('GA Tracker ID has not been set!');
+                throw new RuntimeException('GA Tracker ID has not been set!');
             }
         }
         return $tracker;

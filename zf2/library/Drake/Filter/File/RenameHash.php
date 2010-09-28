@@ -13,6 +13,11 @@
  */
 
 /**
+ * @namespace
+ */
+namespace Drake\Filter\File;
+
+/**
  * Renames uploaded files to a md5 hash.
  *
  * @category    Drake
@@ -21,7 +26,7 @@
  * @copyright   Copyright (c) 2008-2010 Rob Zienert (http://robzienert.com)
  * @license     http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-class Drake_Filter_File_RenameHash extends Zend_Filter_File_Rename
+class RenameHash extends \Zend\Filter\File\Rename
 {
     /**
      * Hashes a filename by timestamp.

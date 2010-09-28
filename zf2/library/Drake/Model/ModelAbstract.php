@@ -12,6 +12,11 @@
  */
 
 /**
+ * @namespace
+ */
+namespace Drake\Model;
+
+/**
  * Needs documentation
  *
  * @category    Drake
@@ -19,7 +24,7 @@
  * @copyright   Copyright (c) 2008-2010 Rob Zienert (http://robzienert.com)
  * @license     http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-abstract class Drake_Model_ModelAbstract
+abstract class AbstractModel
 {
     /**
      * Map a call to set a property to its corresponding mutator if it exists.
@@ -36,7 +41,7 @@ abstract class Drake_Model_ModelAbstract
     public function __set($name, $value)
     {
         if ('_' != $name[0]) {
-            $method = $this->_inflectPropertyToMethod($name, 'set');
+            $method = $this->inflectPropertyToMethod($name, 'set');
             if (method_exists($this, $method)) {
                 return $this->$method($value);
             }
@@ -47,7 +52,7 @@ abstract class Drake_Model_ModelAbstract
             }
         }
 
-        throw new LogicException("No property exists by `$name`");
+        throw new \LogicException("No property exists by `$name`");
     }
 
     /**
@@ -64,7 +69,7 @@ abstract class Drake_Model_ModelAbstract
     public function __get($name)
     {
         if ('_' != $name[0]) {
-            $method = $this->_inflectPropertyToMethod($name);
+            $method = $this->inflectPropertyToMethod($name);
             if (method_exists($this, $method)) {
                 return $this->$method();
             }
@@ -74,7 +79,7 @@ abstract class Drake_Model_ModelAbstract
             }
         }
 
-        throw new LogicException("No property exists by `$name`");
+        throw new \LogicException("No property exists by `$name`");
     }
 
     /**
@@ -91,18 +96,18 @@ abstract class Drake_Model_ModelAbstract
     {
         if (strlen($name) > 3) {
             if (0 === strpos($name, 'set')) {
-                $property = $this->_inflectMethodToProperty($name);
+                $property = $this->inflectMethodToProperty($name);
                 $this->$property = array_shift($arguments);
                 return $this;
             }
 
             if (0 === strpos($name, 'get')) {
-                $property = $this->_inflectMethodToProperty($name);
+                $property = $this->inflectMethodToProperty($name);
                 return $this->$property;
             }
         }
 
-        throw new BadMethodCallException("No method named `$name` exists");
+        throw new \BadMethodCallException("No method named `$name` exists");
     }
 
     /**
@@ -114,9 +119,9 @@ abstract class Drake_Model_ModelAbstract
      * @param string $prefix
      * @return string
      */
-    protected function _inflectPropertyToMethod($property, $prefix = 'get')
+    protected function inflectPropertyToMethod($property, $prefix = 'get')
     {
-        $filter = new Zend_Filter_Word_UnderscoreToCamelCase();
+        $filter = new \Zend\Filter\Word\UnderscoreToCamelCase();
         $method = $prefix . ucfirst($filter->filter($property));
         return $method;
     }
@@ -130,9 +135,9 @@ abstract class Drake_Model_ModelAbstract
      * @param integer $prefixCount
      * @return string
      */
-    protected function _inflectMethodToProperty($method, $prefixCount = 3)
+    protected function inflectMethodToProperty($method, $prefixCount = 3)
     {
-        $filter = new Zend_Filter_Word_CamelCaseToUnderscore();
+        $filter = new \Zend\Filter\Word\CamelCaseToUnderscore();
         $property = substr($method, $prefixCount);
         $property = strtolower($filter->filter($property));
         return $property;

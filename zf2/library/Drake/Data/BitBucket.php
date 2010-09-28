@@ -12,6 +12,11 @@
  */
 
 /**
+ * @namespace
+ */
+namespace Drake\Data;
+
+/**
  * A class that maps integers (or a combination of them) to an array of values.
  *
  * Originally developed by Aaron van Kaam <http://cyberpunkrock.com>
@@ -21,22 +26,22 @@
  * @copyright   Copyright (c) 2008-2010 Rob Zienert (http://robzienert.com)
  * @license     http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-class Drake_Data_BitBucket
+class BitBucket
 {
     /**
      * @var array Bit switches
      */
-    protected $_bits = array();
+    protected $bits = array();
 
     /**
      * @var integer Switch state value
      */
-    protected $_bucket = 0;
+    protected $bucket = 0;
 
     /**
      * @var integer Maximum bucket boundry
      */
-    protected $_max = 0;
+    protected $max = 0;
 
     /**
      * Constructor
@@ -49,17 +54,16 @@ class Drake_Data_BitBucket
     {
         foreach ($switches as $name) {
             $name = $this->normalize($name);
-            $this->_max = ($this->_max > 0) ? $this->_max << 1 : 1;
+            $this->max = ($this->max > 0) ? $this->max << 1 : 1;
 
-            if (isset($this->_bits[$name])) {
-                throw new Drake_Data_RuntimeException(
-                    'Could not assign bit: Conflicting bit name in ' . __CLASS__);
+            if (isset($this->bits[$name])) {
+                throw new RuntimeException('Could not assign bit: Conflicting bit name in ' . get_class($this));
             }
 
-            $this->_bits[$name] = $this->_max;
+            $this->bits[$name] = $this->max;
         }
 
-        $this->_max = ($this->_max << 1) - 1;
+        $this->max = ($this->max << 1) - 1;
     }
 
     /**
@@ -89,10 +93,10 @@ class Drake_Data_BitBucket
             }
             return true;
         } elseif (is_string($bits)) {
-            return array_key_exists($this->normalize($bits), $this->_bits);
+            return array_key_exists($this->normalize($bits), $this->bits);
         }
 
-        return ($bits <= $this->_max && 0 <= $bits);
+        return ($bits <= $this->max && 0 <= $bits);
     }
 
     /**
@@ -102,7 +106,7 @@ class Drake_Data_BitBucket
      */
     public function getBits()
     {
-        return $this->_bits;
+        return $this->bits;
     }
 
     /**
@@ -116,23 +120,20 @@ class Drake_Data_BitBucket
     {
         if (is_int($value)) {
             if (!$this->isValid($value)) {
-                throw new Drake_Data_UnexpectedValueException(
-                    'Provided bit is out of bounds');
+                throw new UnexpectedValueException('Provided bit is out of bounds');
             }
 
             return $value;
         } elseif (is_string($value)) {
             $value = $this->normalize($value);
             if (!$this->isValid($value)) {
-                throw new Drake_Data_UnexpectedValueException(
-                    'Provided bit is undefined');
+                throw new UnexpectedValueException('Provided bit is undefined');
             }
 
-            return $this->_bits[$value];
+            return $this->bits[$value];
         }
 
-        throw new Drake_Data_UnexpectedValueException(
-            'Unexpected bit value provided');
+        throw new UnexpectedValueException('Unexpected bit value provided');
     }
 
     /**
@@ -144,13 +145,13 @@ class Drake_Data_BitBucket
      */
     public function equals($value)
     {
-        if ($value instanceof Drake_Data_BitBucket) {
+        if ($value instanceof BitBucket) {
             return 0 === $this->compare($value);
         }
 
         try {
             return $this->has($value);
-        } catch (Drake_Data_Exception $e) {
+        } catch (Exception $e) {
             return false;
         }
     }
@@ -162,7 +163,7 @@ class Drake_Data_BitBucket
      * @throws Drake_Data_UnexpectedValueException
      * @return integer
      */
-    public function compare(Drake_Data_BitBucket $bitBucket) {
+    public function compare(BitBucket $bitBucket) {
         if ($this->toArray() === $bitBucket->toArray()) {
             if ($this->toInt() === $bitBucket->toInt()) {
                 return 0;
@@ -171,8 +172,7 @@ class Drake_Data_BitBucket
             return $this->toInt() > $bitBucket->toInt() ? +1 : -1;
         }
 
-        throw new Drake_Data_UnexpectedValueException(
-            'The bitbucket values do not match and cannot be compared');
+        throw new UnexpectedValueException('The bitbucket values do not match and cannot be compared');
     }
 
     /**
@@ -185,17 +185,17 @@ class Drake_Data_BitBucket
     {
         if (is_array($value)) {
             foreach ($value as $bit) {
-                if (0 === ($this->_bucket & $this->getBit($bit))) {
+                if (0 === ($this->bucket & $this->getBit($bit))) {
                     return false;
                 }
             }
 
             return true;
-        } elseif ($value instanceof Drake_Data_BitBucket) {
+        } elseif ($value instanceof BitBucket) {
             return 0 === $this->compare($value);
         }
 
-        return !(0 === ($this->_bucket & $this->getBit($value)));
+        return !(0 === ($this->bucket & $this->getBit($value)));
     }
 
     /**
@@ -211,7 +211,7 @@ class Drake_Data_BitBucket
                 $this->add($value);
             }
         } else {
-            $this->_bucket != $this->getBit($values);
+            $this->bucket != $this->getBit($values);
         }
 
         return $this;
@@ -230,7 +230,7 @@ class Drake_Data_BitBucket
                 $this->remove($value);
             }
         } else {
-            $this->_bucket &= ~$this->getBit($values);
+            $this->bucket &= ~$this->getBit($values);
         }
 
         return $this;
@@ -249,7 +249,7 @@ class Drake_Data_BitBucket
                 $this->toggle($value);
             }
         } else {
-            $this->_bucket ^= $this->getBit($values);
+            $this->bucket ^= $this->getBit($values);
         }
 
         return $this;
@@ -262,7 +262,7 @@ class Drake_Data_BitBucket
      */
     public function invert()
     {
-        return $this->toggle($this->_bits);
+        return $this->toggle($this->bits);
     }
 
     /**
@@ -272,7 +272,7 @@ class Drake_Data_BitBucket
      */
     public function none()
     {
-        $this->_bucket = 0;
+        $this->bucket = 0;
         return $this;
     }
 
@@ -283,7 +283,7 @@ class Drake_Data_BitBucket
      */
     public function all()
     {
-        $this->_bucket = $this->_max;
+        $this->bucket = $this->max;
     }
 
     /**
@@ -297,16 +297,16 @@ class Drake_Data_BitBucket
     {
         if (is_int($value)) {
             $pieces = array();
-            end($this->_bits);
+            end($this->bits);
 
-            while (0 < $value && current($this->_bits)) {
-                $currentBit = current($this->_bits);
+            while (0 < $value && current($this->bits)) {
+                $currentBit = current($this->bits);
                 if (0 <= $value - $currentBit) {
-                    $pieces[$currentBit] = key($this->_bits);
+                    $pieces[$currentBit] = key($this->bits);
                     $value -= $currentBit;
                 }
 
-                prev($this->_bits);
+                prev($this->bits);
             }
 
             ksort($pieces);
@@ -314,8 +314,7 @@ class Drake_Data_BitBucket
             return $pieces;
         }
 
-        throw new Drake_Data_InvalidArgumentException(
-            'Value provided must be an integer');
+        throw new InvalidArgumentException('Value provided must be an integer');
     }
 
     /**
@@ -325,7 +324,7 @@ class Drake_Data_BitBucket
      */
     public function toInt()
     {
-        return $this->_bucket;
+        return $this->bucket;
     }
 
     /**
@@ -334,7 +333,7 @@ class Drake_Data_BitBucket
      */
     public function toArray()
     {
-        return $this->explode($this->_bucket);
+        return $this->explode($this->bucket);
     }
 
     /**

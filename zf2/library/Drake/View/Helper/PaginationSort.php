@@ -13,6 +13,11 @@
  */
 
 /**
+ * @namespace
+ */
+namespace Drake\View\Helper;
+
+/**
  * Creates a pagination sorting link for use in data grids, etc.
  *
  * @category    Drake
@@ -21,7 +26,7 @@
  * @copyright   Copyright (c) 2008-2010 Rob Zienert (http://robzienert.com)
  * @license     http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-class Drake_View_Helper_PaginationSort extends Zend_View_Helper_Abstract
+class PaginationSort extends \Zend\View\Helper\AbstractHelper
 {
     /**
      * Creates a pagination sorting link
@@ -33,7 +38,7 @@ class Drake_View_Helper_PaginationSort extends Zend_View_Helper_Abstract
      */
     public function paginationSort($label, $column, $title = 'Click to reorder')
     {
-        $front = Zend_Controller_Front::getInstance();
+        $front = \Zend\Controller\Front::getInstance();
         $request = $front->getRequest();
 
         $currentColumn = $request->getParam('sort', null);

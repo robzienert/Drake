@@ -13,6 +13,11 @@
  */
 
 /**
+ * @namespace
+ */
+namespace Drake\View\Helper;
+
+/**
  * Runtime exception
  * 
  * @category    Drake
@@ -21,7 +26,6 @@
  * @copyright   Copyright (c) 2008-2010 Rob Zienert (http://robzienert.com)
  * @license     http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-class Drake_View_Helper_RuntimeException extends RuntimeException
-    implements Drake_View_Helper_Exception
+class RuntimeException extends \RuntimeException implements \Drake\View\Exception
 {
 }

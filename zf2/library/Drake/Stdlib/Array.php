@@ -6,7 +6,7 @@
  * package in the file LICENSE.
  *
  * @category    Drake
- * @package     Drake_Filter
+ * @package     Drake_Util
  * @copyright   Copyright (c) 2008-2010 Rob Zienert (http://robzienert.com)
  * @license     http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
@@ -14,27 +14,33 @@
 /**
  * @namespace
  */
-namespace Drake\Filter;
+namespace Drake\Stdlib;
 
 /**
- * Slug filter
+ * Needs documentation
  *
  * @category    Drake
- * @package     Drake_Filter
+ * @package     Drake_Util
  * @copyright   Copyright (c) 2008-2010 Rob Zienert (http://robzienert.com)
  * @license     http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-class Slug extends \Zend\Filter\AbstractFilter
+class ArrayUtility
 {
     /**
-     * Converts a string to a url-safe slug
+     * Recursively convert data to an array
      *
-     * @param string $value
-     * @return string
+     * @param mixed $data
+     * @return array
      */
-    public function filter($value)
+    public static function convertRecursive($data)
     {
-        $value = \Drake\Util\StringInflector::sluggify($value);
-        return $value;
+        $array = array();
+        foreach ($data as $key => $value) {
+            if (is_object($value)) {
+                $value = self::convertRecursive($value);
+            }
+            $array[$key] = $value;
+        }
+        return $array;
     }
 }

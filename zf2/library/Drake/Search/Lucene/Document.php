@@ -12,6 +12,11 @@
  */
 
 /**
+ * @namespace
+ */
+namespace Drake\Search\Lucene;
+
+/**
  * Adds standardized functionality and auto-maintenance of documents.
  *
  * @category    Drake
@@ -19,7 +24,7 @@
  * @copyright   Copyright (c) 2008-2010 Rob Zienert (http://robzienert.com)
  * @license     http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-class Drake_Search_Lucene_Document extends Zend_Search_Lucene_Document
+class Document extends \Zend\Search\Lucene\Document
 {
     /**
      * Adds defualt fields to the document
@@ -29,8 +34,8 @@ class Drake_Search_Lucene_Document extends Zend_Search_Lucene_Document
      */
     public function __construct($class, $key)
     {
-        $this->addField(Zend_Search_Lucene_Field::keyword('docRef', "{$class}:{$key}"));
-        $this->addField(Zend_Search_Lucene_Field::unIndexed('class', $class));
-        $this->addField(Zend_Search_Lucene_Field::unIndexed('key', $key));
+        $this->addField(\Zend\Search\Lucene\Field::keyword('docRef', "{$class}:{$key}"));
+        $this->addField(\Zend\Search\Lucene\Field::unIndexed('class', $class));
+        $this->addField(\Zend\Search\Lucene\Field::unIndexed('key', $key));
     }
 }

@@ -13,6 +13,11 @@
  */
 
 /**
+ * @namespace
+ */
+namespace Drake\View\Helper;
+
+/**
  * Adds a simple cancel link next to the form submit button
  *
  * @category    Drake
@@ -21,12 +26,12 @@
  * @copyright   Copyright (c) 2008-2010 Rob Zienert (http://robzienert.com)
  * @license     http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-class Drake_View_Helper_FormSubmitCancel extends Zend_View_Helper_FormSubmit
+class FormSubmitCancel extends \Zend\View\Helper\FormSubmit
 {
     public function formSubmitCancel($name, $value = null, $attribs = null)
     {
         if (!isset($attribs['cancel_url'])) {
-            throw new Zend_View_Exception("Cancel URL was not provivded");
+            throw new HelperException("Cancel URL was not provivded");
         }
 
         $url = $attribs['cancel_url'];

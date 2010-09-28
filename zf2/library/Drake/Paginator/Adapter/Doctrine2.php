@@ -13,6 +13,11 @@
  */
 
 /**
+ * @namespace
+ */
+namespace Drake\Paginator\Adapter;
+
+/**
  * A simple Doctrine2 Zend_Paginator Adapter.
  *
  * @category    Drake
@@ -21,7 +26,7 @@
  * @copyright   Copyright (c) 2008-2010 Rob Zienert (http://robzienert.com)
  * @license     http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-class Drake_Paginator_Adapter_Doctrine2 implements Zend_Paginator_Adapter_Interface
+class Doctrine2 implements \Zend\Paginator\Adapter
 {
     /**
      * @var int

@@ -12,6 +12,13 @@
  */
 
 /**
+ * @namespace
+ */
+namespace Drake\Controller\Action\Helper;
+
+use \Zend\Registry as Registry;
+
+/**
  * Logger action helper
  *
  * @category    Drake
@@ -20,14 +27,14 @@
  * @copyright   Copyright (c) 2008-2010 Rob Zienert (http://robzienert.com)
  * @license     http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-class Drake_Controller_Action_Helper_Logger extends Zend_Controller_Action_Helper_Abstract
+class Logger extends \Zend\Controller\Action\Helper\AbstractHelper
 {
     /**
      * Logger instance
      *
      * @var Zend_Log
      */
-    private $_logger;
+    private $logger;
 
     /**
      * Constructor
@@ -35,10 +42,10 @@ class Drake_Controller_Action_Helper_Logger extends Zend_Controller_Action_Helpe
      */
     public function __construct()
     {
-        if (Zend_Registry::isRegistered('logger')) {
-            $this->_logger = Zend_Registry::get('logger');
+        if (Registry::isRegistered('logger')) {
+            $this->logger = Registry::get('logger');
         } else {
-            throw new Drake_Controller_Action_Helper_RuntimeException(
+            throw new RuntimeException(
                 'Logger is not registered in the Registry');
         }
     }
@@ -51,8 +58,8 @@ class Drake_Controller_Action_Helper_Logger extends Zend_Controller_Action_Helpe
      */
     public function direct($message, $priority)
     {
-        if ($this->_logger) {
-            $this->_logger->log($message, $priority);
+        if ($this->logger) {
+            $this->logger->log($message, $priority);
         }
     }
 
@@ -64,9 +71,9 @@ class Drake_Controller_Action_Helper_Logger extends Zend_Controller_Action_Helpe
      */
     public function __call($method, array $args = array())
     {
-        if ($this->_logger) {
+        if ($this->logger) {
             array_pad($args, 1);
-            $this->_logger->$method($args[0]);
+            $this->logger->$method($args[0]);
         }
     }
 }

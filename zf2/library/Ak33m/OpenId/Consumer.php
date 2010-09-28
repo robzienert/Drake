@@ -20,12 +20,17 @@
  */
 
 /**
+ * @namespace
+ */
+namespace Ak33m\OpenId;
+
+/**
  * Modified openid consumer to be spec 2.0 compliant
  *
  * @author Akeem Philbert <akeem.philbert@gmail.com>
  * @copyright Copyright (c) 2009 Akeem Philbert
  */
-class Ak33m_OpenId_Consumer extends Zend_OpenId_Consumer
+class Consumer extends \Zend\OpenId\Consumer
 {
     /**
      * Performs discovery of identity and finds OpenID URL, OpenID server URL
@@ -41,7 +46,7 @@ class Ak33m_OpenId_Consumer extends Zend_OpenId_Consumer
     protected function _discovery(&$id, &$server, &$version)
     {
         $realId = $id;
-        if ($this->_storage->getDiscoveryInfo(
+        if ($this->storage->getDiscoveryInfo(
                 $id,
                 $realId,
                 $server,
@@ -54,7 +59,7 @@ class Ak33m_OpenId_Consumer extends Zend_OpenId_Consumer
         /* TODO: OpenID 2.0 (7.3) XRI and Yadis discovery */
 
         /* HTML-based discovery */
-        $response = $this->_httpRequest($id, 'GET', array(), $status);
+        $response = $this->httpRequest($id, 'GET', array(), $status);
         if ($status != 200 || !is_string($response)) {
             return false;
         }
@@ -117,7 +122,7 @@ class Ak33m_OpenId_Consumer extends Zend_OpenId_Consumer
         }
 
         $expire = time() + 60 * 60;
-        $this->_storage->addDiscoveryInfo($id, $realId, $server, $version, $expire);
+        $this->storage->addDiscoveryInfo($id, $realId, $server, $version, $expire);
         $id = $realId;
         return true;
     }
@@ -139,25 +144,25 @@ class Ak33m_OpenId_Consumer extends Zend_OpenId_Consumer
      * @return bool
      */
     protected function _checkId($immediate, $id, $returnTo=null, $root=null,
-        $extensions=null, Zend_Controller_Response_Abstract $response = null)
+        $extensions=null, \Zend\Controller\Response\Abstract $response = null)
     {
-        $this->_setError('');
+        $this->setError('');
 
-        if (!Zend_OpenId::normalize($id)) {
-            $this->_setError("Normalisation failed");
+        if (!\Zend\OpenId::normalize($id)) {
+            $this->setError("Normalisation failed");
             return false;
         }
         $claimedId = $id;
 
-        if (!$this->_discovery($id, $server, $version)) {
-            $this->_setError("Discovery failed: " . $this->getError());
+        if (!$this->discovery($id, $server, $version)) {
+            $this->setError("Discovery failed: " . $this->getError());
             return false;
         }
-        if (!$this->_associate($server, $version)) {
-            $this->_setError("Association failed: " . $this->getError());
+        if (!$this->associate($server, $version)) {
+            $this->setError("Association failed: " . $this->getError());
             return false;
         }
-        if (!$this->_getAssociation(
+        if (!$this->getAssociation(
                 $server,
                 $handle,
                 $macFunc,
@@ -172,7 +177,7 @@ class Ak33m_OpenId_Consumer extends Zend_OpenId_Consumer
 
         $params = array();
         if ($version >= 2.0) {
-            $params['openid.ns'] = Zend_OpenId::NS_2_0;
+            $params['openid.ns'] = \Zend\OpenId::NS_2_0;
         }
 
         $params['openid.mode'] = $immediate ?
@@ -183,28 +188,28 @@ class Ak33m_OpenId_Consumer extends Zend_OpenId_Consumer
         $params['openid.claimed_id'] = $claimedId;
 
         if ($version <= 2.0) {
-            if ($this->_session !== null) {
-                $this->_session->identity = $id;
-                $this->_session->claimed_id = $claimedId;
+            if ($this->session !== null) {
+                $this->session->identity = $id;
+                $this->session->claimed_id = $claimedId;
 
                 if ($server == 'https://www.google.com/accounts/o8/ud') {
-                  $this->_session->identity = 'http://specs.openid.net/auth/2.0/identifier_select';
-                  $this->_session->claimed_id = 'http://specs.openid.net/auth/2.0/identifier_select';
+                  $this->session->identity = 'http://specs.openid.net/auth/2.0/identifier_select';
+                  $this->session->claimed_id = 'http://specs.openid.net/auth/2.0/identifier_select';
                 }
             } else if (defined('SID')) {
-                $_SESSION["zend_openid"] = array(
+                $SESSION["zend_openid"] = array(
                     "identity" => $id,
                     "claimed_id" => $claimedId);
 
                 if ($server == 'https://www.google.com/accounts/o8/ud') {
-                  $_SESSION['zend_openid']['identity'] = 'http://specs.openid.net/auth/2.0/identifier_select';
-                  $_SESSION['zend_openid']['claimed_id'] = 'http://specs.openid.net/auth/2.0/identifier_select';
+                  $SESSION['zend_openid']['identity'] = 'http://specs.openid.net/auth/2.0/identifier_select';
+                  $SESSION['zend_openid']['claimed_id'] = 'http://specs.openid.net/auth/2.0/identifier_select';
                 }
             } else {
                 require_once "Zend/Session/Namespace.php";
-                $this->_session = new Zend_Session_Namespace("zend_openid");
-                $this->_session->identity = $id;
-                $this->_session->claimed_id = $claimedId;
+                $this->session = new \Zend\Session\Namespace("zend_openid");
+                $this->session->identity = $id;
+                $this->session->claimed_id = $claimedId;
 
                 if ($server == 'https://www.google.com/accounts/o8/ud') {
                   $params['openid.identity'] = 'http://specs.openid.net/auth/2.0/identifier_select';
@@ -217,10 +222,10 @@ class Ak33m_OpenId_Consumer extends Zend_OpenId_Consumer
             $params['openid.assoc_handle'] = $handle;
         }
 
-        $params['openid.return_to'] = Zend_OpenId::absoluteUrl($returnTo);
+        $params['openid.return_to'] = \Zend\OpenId::absoluteUrl($returnTo);
 
         if (empty($root)) {
-            $root = Zend_OpenId::selfUrl();
+            $root = \Zend\OpenId::selfUrl();
             if ($root[strlen($root)-1] != '/') {
                 $root = dirname($root);
             }
@@ -231,11 +236,11 @@ class Ak33m_OpenId_Consumer extends Zend_OpenId_Consumer
             $params['openid.trust_root'] = $root;
         }
 
-        if (!Zend_OpenId_Extension::forAll($extensions, 'prepareRequest', $params)) {
-            $this->_setError("Extension::prepareRequest failure");
+        if (!\Zend\OpenId\Extension::forAll($extensions, 'prepareRequest', $params)) {
+            $this->setError("Extension::prepareRequest failure");
             return false;
         }
-        Zend_OpenId::redirect($server, $params, $response);
+        \Zend\OpenId::redirect($server, $params, $response);
         return true;
     }
 }

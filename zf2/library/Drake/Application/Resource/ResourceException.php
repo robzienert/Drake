@@ -6,7 +6,7 @@
  * package in the file LICENSE.
  *
  * @category    Drake
- * @package     Drake_Filter
+ * @package     Drake_Exception
  * @copyright   Copyright (c) 2008-2010 Rob Zienert (http://robzienert.com)
  * @license     http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
@@ -14,27 +14,16 @@
 /**
  * @namespace
  */
-namespace Drake\Filter;
+namespace Drake\Application\Resource;
 
 /**
- * Slug filter
+ * Exception interface
  *
  * @category    Drake
- * @package     Drake_Filter
+ * @package     Drake_Exception
  * @copyright   Copyright (c) 2008-2010 Rob Zienert (http://robzienert.com)
  * @license     http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-class Slug extends \Zend\Filter\AbstractFilter
+class ResourceException extends \Exception implements Exception
 {
-    /**
-     * Converts a string to a url-safe slug
-     *
-     * @param string $value
-     * @return string
-     */
-    public function filter($value)
-    {
-        $value = \Drake\Util\StringInflector::sluggify($value);
-        return $value;
-    }
 }

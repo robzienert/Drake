@@ -12,6 +12,11 @@
  */
 
 /**
+ * @namespace
+ */
+namespace Drake\Data;
+
+/**
  * Invalid argument exception
  *
  * @category    Drake
@@ -19,7 +24,6 @@
  * @copyright   Copyright (c) 2008-2010 Rob Zienert (http://robzienert.com)
  * @license     http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-class Drake_Data_InvalidArgumentException extends InvalidArgumentException
-    implements Drake_Data_Exception
+class InvalidArgumentException extends \InvalidArgumentException implements Exception
 {
 }

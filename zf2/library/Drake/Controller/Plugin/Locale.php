@@ -12,6 +12,11 @@
  */
 
 /**
+ * @namespace
+ */
+namespace Drake\Controller\Plugin;
+
+/**
  * Application language and locale detection by request
  *
  * @category    Drake
@@ -20,7 +25,7 @@
  * @copyright   Copyright (c) 2008-2010 Rob Zienert (http://robzienert.com)
  * @license     http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-class Drake_Controller_Plugin_Locale extends Zend_Controller_Plugin_Abstract
+class Locale extends \Zend\Controller\Plugin\AbstractHelper
 {
     /**
      * Sets the application locale and translation based on the lang param.
@@ -29,9 +34,9 @@ class Drake_Controller_Plugin_Locale extends Zend_Controller_Plugin_Abstract
      *
      * @param Zend_Controller_Request_Abstract $request
      */
-    public function routeShutdown(Zend_Controller_Request_Abstract $request)
+    public function routeShutdown(\Zend\Controller\Request\AbstractHelper $request)
     {
-        $registry = Zend_Registry::getInstance();
+        $registry = \Zend\Registry::getInstance();
 
         $locale = $registry->get('Zend_Locale');
         $translate = $registry->get('Zend_Translate');
@@ -51,7 +56,7 @@ class Drake_Controller_Plugin_Locale extends Zend_Controller_Plugin_Abstract
         $locale->setLocale($localeParam);
         $translate->setLocale($locale);
 
-        Zend_Form::setDefaultTranslator($translate);
+        \Zend\Form::setDefaultTranslator($translate);
 
         setcookie('lang', $locale->getLanguage(), null, '/');
     }

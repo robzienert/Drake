@@ -12,6 +12,11 @@
  */
 
 /**
+ * @namespace
+ */
+namespace Drake\Controller\Action\Helper;
+
+/**
  * RuntimeException
  *
  * @category    Drake
@@ -20,7 +25,6 @@
  * @copyright   Copyright (c) 2008-2010 Rob Zienert (http://robzienert.com)
  * @license     http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-class Drake_Controller_Action_Helper_RuntimeException extends RuntimeException
-    implements Drake_Controller_Action_Helper_Exception
+class RuntimeException extends \RuntimeException implements Exception
 {
 }

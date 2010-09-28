@@ -13,6 +13,11 @@
  */
 
 /**
+ * @namespace
+ */
+namespace Drake\View\Helper;
+
+/**
  * A push Google Analytics view helper; based off of the view helper originally
  * developed by Harold Thétiot (http://hthetiot.blogspot.com/).
  *
@@ -22,12 +27,12 @@
  * @copyright   Copyright (c) 2008-2010 Rob Zienert (http://robzienert.com)
  * @license     http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-class Drake_View_Helper_Textile extends Zend_View_Helper_Abstract
+class Textile extends \Zend\View\Helper\AbstractHelper
 {
     /**
      * @var Textile
      */
-    protected static $_textile;
+    protected static $textile;
 
     /**
      * Will render textile input into HTML
@@ -52,10 +57,10 @@ class Drake_View_Helper_Textile extends Zend_View_Helper_Abstract
      */
     public function getTextile()
     {
-        if (null === self::$_textile) {
+        if (null === self::$textile) {
             require_once 'Textile.php';
-            self::$_textile = new Textile();
+            self::$textile = new \Textile();
         }
-        return self::$_textile;
+        return self::$textile;
     }
 }

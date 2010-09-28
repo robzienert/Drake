@@ -13,6 +13,11 @@
  */
 
 /**
+ * @namespace
+ */
+namespace Drake\View\Helper;
+
+/**
  * The Date helper assists in rendering dates to the view.
  *
  * @category    Drake
@@ -21,12 +26,12 @@
  * @copyright   Copyright (c) 2008-2010 Rob Zienert (http://robzienert.com)
  * @license     http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-class Drake_View_Helper_Date extends Zend_View_Helper_Abstract
+class Date extends \Zend\View\Helper\AbstractHelper
 {
     /**
      * @var Zend_Date
      */
-    private $_date;
+    private $date;
 
     /**
      * Direct access; fluent interface
@@ -37,7 +42,7 @@ class Drake_View_Helper_Date extends Zend_View_Helper_Abstract
     public function date($date = null)
     {
         if (null === $date) {
-            $date = new Zend_Date();
+            $date = new \Zend\Date();
         }
         $this->setDate($date);
         return $this;
@@ -50,7 +55,7 @@ class Drake_View_Helper_Date extends Zend_View_Helper_Abstract
      */
     public function getDate()
     {
-        return $this->_date;
+        return $this->date;
     }
 
     /**
@@ -61,15 +66,15 @@ class Drake_View_Helper_Date extends Zend_View_Helper_Abstract
      */
     public function setDate($date)
     {
-        if ($date instanceof Zend_Date) {
-            $this->_date = $date;
+        if ($date instanceof \Zend\Date) {
+            $this->date = $date;
         } else {
-            if ($date instanceof DateTime) {
+            if ($date instanceof \DateTime) {
                 $date = $date->getTimestamp();
             }
 
-            $part = is_numeric($date) ? Zend_Date::TIMESTAMP : Zend_Date::ISO_8601;
-            $this->_date = new Zend_Date($date, $part);
+            $part = is_numeric($date) ? \Zend\Date::TIMESTAMP : \Zend\Date::ISO_8601;
+            $this->date = new \Zend\Date($date, $part);
         }
         return $this;
     }
@@ -104,7 +109,7 @@ class Drake_View_Helper_Date extends Zend_View_Helper_Abstract
         $month  = $week * 4;
         $year   = $month * 12;
 
-        $thenTs = $this->_date->toString(Zend_Date::TIMESTAMP);
+        $thenTs = $this->date->toString(\Zend\Date::TIMESTAMP);
         $nowTs = time();
 
         $difference = $nowTs - $thenTs;
@@ -200,11 +205,11 @@ class Drake_View_Helper_Date extends Zend_View_Helper_Abstract
     public function __call($method, $args)
     {
         try {
-            return call_user_func_array(array($this->_date, $method), $args);
-        } catch (Exception $e) {
+            return call_user_func_array(array($this->date, $method), $args);
+        } catch (\Exception $e) {
             $message = "Invalid method '{$method}' called on Zend_Date object. Exception: ";
             $message .= $e->getMessage();
-            throw new Drake_Exception($message);
+            throw new \Drake\Exception($message);
         }
     }
 

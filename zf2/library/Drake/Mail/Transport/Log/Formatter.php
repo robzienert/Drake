@@ -13,6 +13,11 @@
  */
 
 /**
+ * @namespace
+ */
+namespace Drake\Mail\Transport\Log;
+
+/**
  * Sends mail to a log instead of actually sending through a mail transport.
  *
  * Originally developed by Aaron van Kaam (http://twitter.com/rabbyte).
@@ -23,7 +28,7 @@
  * @copyright   Copyright (c) 2008-2010 Rob Zienert (http://robzienert.com)
  * @license     http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-class Drake_Mail_Transport_Log_Formatter extends Zend_Log_Formatter_Xml
+class Formatter extends \Zend\Log\Formatter\Xml
 {
     /**
      * Formats data into a single line to be written by the writer
@@ -42,29 +47,29 @@ class Drake_Mail_Transport_Log_Formatter extends Zend_Log_Formatter_Xml
             }
         }
 
-        $dom = new DOMDocument;
-        $elt = $dom->appendChild(new DOMElement($this->_rootElement));
+        $dom = new \DOMDocument;
+        $elt = $dom->appendChild(new \DOMElement($this->_rootElement));
 
         foreach ($dataToInsert as $key => $value) {
             if ($key == "message") {
                 $value = $value['message'];
-                $message = $elt->appendChild(new DOMElement('email'));
+                $message = $elt->appendChild(new \DOMElement('email'));
 
                 foreach (array('headers', 'body') as $messageKey) {
                     $value[$messageKey] = str_replace('=3D', '=', $value[$messageKey]);
                     $value[$messageKey] = str_replace(
-                        Zend_Mime::$qpReplaceValues,
-                        Zend_Mime::$qpKeys,
+                        \Zend\Mime::$qpReplaceValues,
+                        \Zend\Mime::$qpKeys,
                         $value[$messageKey]
                     );
 
-                    $elem = $message->appendChild(new DomElement($messageKey));
+                    $elem = $message->appendChild(new \DomElement($messageKey));
                     $elem->appendChild( $dom->createCDataSection($value[$messageKey]));
                 }
 
                 $elt->appendChild($message);
             } else {
-                $elt->appendChild(new DOMElement($key, $value));
+                $elt->appendChild(new \DOMElement($key, $value));
             }
         }
 

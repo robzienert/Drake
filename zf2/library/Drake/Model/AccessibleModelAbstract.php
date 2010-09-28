@@ -12,6 +12,11 @@
  */
 
 /**
+ * @namespace
+ */
+namespace Drake\Model;
+
+/**
  * Needs documentation
  *
  * @category    Drake
@@ -19,23 +24,22 @@
  * @copyright   Copyright (c) 2008-2010 Rob Zienert (http://robzienert.com)
  * @license     http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-abstract class Drake_Model_AccessibleModelAbstract extends Drake_Model_ModelAbstract
-    implements Zend_Acl_Resource_Interface
+abstract class AbstractAccessibleModel extends AbstractModel implements \Zend\Acl\Resource
 {
     /**
      * @var Zend_Acl
      */
-    protected $_acl;
+    protected $acl;
 
     /**
      * @var Zend_Acl
      */
-    protected static $_defaultAcl;
+    protected static $defaultAcl;
 
     /**
      * @var string The ACL resource name
      */
-    protected $_resourceId;
+    protected $resourceId;
 
     /**
      * Construct
@@ -44,7 +48,7 @@ abstract class Drake_Model_AccessibleModelAbstract extends Drake_Model_ModelAbst
      */
     public function __construct()
     {
-        $this->_init();
+        $this->init();
     }
 
     /**
@@ -61,13 +65,13 @@ abstract class Drake_Model_AccessibleModelAbstract extends Drake_Model_ModelAbst
      * @param Zend_Acl $acl
      * @return void
      */
-    public function setAcl(Zend_Acl $acl)
+    public function setAcl(\Zend\Acl $acl)
     {
-        $this->_acl = $acl;
-        if (!$this->_acl->hasResource($this)) {
-            $this->_acl->add($acl);
+        $this->acl = $acl;
+        if (!$this->acl->hasResource($this)) {
+            $this->acl->add($acl);
         }
-        $this->_initAcl();
+        $this->initAcl();
     }
 
     /**
@@ -79,13 +83,13 @@ abstract class Drake_Model_AccessibleModelAbstract extends Drake_Model_ModelAbst
      */
     public function getAcl()
     {
-        if (null === $this->_acl) {
+        if (null === $this->acl) {
             if (null === ($acl = self::getDefaultAcl())) {
-                throw new LogicException("No ACL or default ACL defined!");
+                throw new ModelException("No ACL or default ACL defined!");
             }
             $this->setAcl($acl);
         }
-        return $this->_acl;
+        return $this->acl;
     }
 
     /**
@@ -107,7 +111,7 @@ abstract class Drake_Model_AccessibleModelAbstract extends Drake_Model_ModelAbst
      */
     public function setResourceId($resourceId)
     {
-        $this->_resourceId = $resourceId;
+        $this->resourceId = $resourceId;
     }
 
     /**
@@ -123,8 +127,8 @@ abstract class Drake_Model_AccessibleModelAbstract extends Drake_Model_ModelAbst
      */
     public function getResourceId()
     {
-        if (null === $this->_resourceId) {
-            $filter = new Zend_Filter_Work_SeparatorToSeparator('_', '.');
+        if (null === $this->resourceId) {
+            $filter = new \Zend\Filter\Work\SeparatorToSeparator('_', '.');
             $className = strtolower(get_class($this));
             $resourceId = 'model:' . $filter->filter(
                 str_replace('_model', '', $className));
@@ -132,7 +136,7 @@ abstract class Drake_Model_AccessibleModelAbstract extends Drake_Model_ModelAbst
             $this->setResourceId($resourceId);
         }
 
-        return $this->_resourceId;
+        return $this->resourceId;
     }
 
     /**
@@ -153,9 +157,9 @@ abstract class Drake_Model_AccessibleModelAbstract extends Drake_Model_ModelAbst
      *
      * @param Zend_Acl $acl
      */
-    public static function setDefaultAcl(Zend_Acl $acl)
+    public static function setDefaultAcl(\Zend\Acl $acl)
     {
-        self::$_defaultAcl = $acl;
+        self::$defaultAcl = $acl;
     }
 
     /**
@@ -165,6 +169,6 @@ abstract class Drake_Model_AccessibleModelAbstract extends Drake_Model_ModelAbst
      */
     public static function getDefaultAcl()
     {
-        return self::$_defaultAcl;
+        return self::$defaultAcl;
     }
 }
