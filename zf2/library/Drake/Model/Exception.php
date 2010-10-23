@@ -22,6 +22,6 @@ namespace Drake\Model;
  * @copyright   Copyright (c) 2008-2010 Rob Zienert (http://robzienert.com)
  * @license     http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-class Exception
+interface Exception
 {
 }
