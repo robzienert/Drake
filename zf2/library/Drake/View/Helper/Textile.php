@@ -2,14 +2,17 @@
 /**
  * Drake Framework
  *
- * This source file is subject to the new BSD license that is bundled with this
- * package in the file LICENSE.
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the BSD License that is bundled with this
+ * package in the file LICENSE. It is also available through the world-wide-web
+ * at this URL: http://github.com/robzienert/Drake/blob/develop/LICENSE
  *
  * @category    Drake
  * @package     Drake_View
  * @subpackage  Helper
  * @copyright   Copyright (c) 2008-2010 Rob Zienert (http://robzienert.com)
- * @license     http://www.opensource.org/licenses/bsd-license.php New BSD License
+ * @license     http://github.com/robzienert/Drake/blob/develop/LICENSE New BSD
  */
 
 /**
@@ -18,14 +21,11 @@
 namespace Drake\View\Helper;
 
 /**
- * A push Google Analytics view helper; based off of the view helper originally
- * developed by Harold Thétiot (http://hthetiot.blogspot.com/).
- *
  * @category    Drake
  * @package     Drake_View
  * @subpackage  Helper
  * @copyright   Copyright (c) 2008-2010 Rob Zienert (http://robzienert.com)
- * @license     http://www.opensource.org/licenses/bsd-license.php New BSD License
+ * @license     http://github.com/robzienert/Drake/blob/develop/LICENSE New BSD
  */
 class Textile extends \Zend\View\Helper\AbstractHelper
 {

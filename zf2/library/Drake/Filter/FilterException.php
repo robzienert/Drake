@@ -20,13 +20,10 @@
 namespace Drake\Filter;
 
 /**
- * InvalidArgument Exception
- *
  * @category    Drake
  * @package     Drake_Filter
- * @subpackage  File
  * @copyright   Copyright (c) 2008-2010 Rob Zienert (http://robzienert.com)
- * @license     http://www.opensource.org/licenses/bsd-license.php New BSD License
+ * @license     http://github.com/robzienert/Drake/blob/develop/LICENSE New BSD
  */
 class FilterException extends \Exception implements Exception
 {

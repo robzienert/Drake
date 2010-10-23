@@ -2,13 +2,17 @@
 /**
  * Drake Framework
  *
- * This source file is subject to the new BSD license that is bundled with this
- * package in the file LICENSE.
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the BSD License that is bundled with this
+ * package in the file LICENSE. It is also available through the world-wide-web
+ * at this URL: http://github.com/robzienert/Drake/blob/develop/LICENSE
  *
  * @category    Drake
  * @package     Drake_Controller
+ * @subpackage  Plugins
  * @copyright   Copyright (c) 2008-2010 Rob Zienert (http://robzienert.com)
- * @license     http://www.opensource.org/licenses/bsd-license.php New BSD License
+ * @license     http://github.com/robzienert/Drake/blob/develop/LICENSE New BSD
  */
 
 /**
@@ -17,13 +21,17 @@
 namespace Drake\Controller\Plugin;
 
 /**
- * Application language and locale detection by request
+ * @todo This component needs to be refactored for ZF2.
  *
+ * @uses        \Zend\Registry
+ * @uses        \Zend\Locale\Locale
+ * @uses        \Zend\Translator\Translator
+ * @uses        \Zend\Form
  * @category    Drake
  * @package     Drake_Controller
  * @subpackage  Plugins
  * @copyright   Copyright (c) 2008-2010 Rob Zienert (http://robzienert.com)
- * @license     http://www.opensource.org/licenses/bsd-license.php New BSD License
+ * @license     http://github.com/robzienert/Drake/blob/develop/LICENSE New BSD
  */
 class Locale extends \Zend\Controller\Plugin\AbstractHelper
 {
@@ -38,8 +46,8 @@ class Locale extends \Zend\Controller\Plugin\AbstractHelper
     {
         $registry = \Zend\Registry::getInstance();
 
-        $locale = $registry->get('Zend_Locale');
-        $translate = $registry->get('Zend_Translate');
+        $locale = $registry->get('Zend\\Locale\\Locale');
+        $translate = $registry->get('Zend\\Translator\\Translator');
 
         $params = $this->getRequest()->getParams();
         $localeParam = isset($params['lang']) ? $param['lang'] : false;

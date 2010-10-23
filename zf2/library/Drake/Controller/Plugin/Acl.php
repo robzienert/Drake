@@ -2,14 +2,17 @@
 /**
  * Drake Framework
  *
- * This source file is subject to the new BSD license that is bundled with this
- * package in the file LICENSE.
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the BSD License that is bundled with this
+ * package in the file LICENSE. It is also available through the world-wide-web
+ * at this URL: http://github.com/robzienert/Drake/blob/develop/LICENSE
  *
  * @category    Drake
  * @package     Drake_Controller
  * @subpackage  Plugins
  * @copyright   Copyright (c) 2008-2010 Rob Zienert (http://robzienert.com)
- * @license     http://www.opensource.org/licenses/bsd-license.php New BSD License
+ * @license     http://github.com/robzienert/Drake/blob/develop/LICENSE New BSD
  */
 
 /**
@@ -17,22 +20,23 @@
  */
 namespace Drake\Controller\Plugin;
 
-use Drake\Controller\Request,
-    ZendAcl as ZendAcl,
-    ZendAuth as ZendAuth,
-    ControllerFront as ControllerFront;
+use \Drake\Controller\Request,
+    \Zend\Acl as ZendAcl,
+    \Zend\Auth as ZendAuth,
+    \Zend\Controller\Front as ControllerFront;
 
 /**
  * An ACL package taken heavily from the Xyster Framework by Jonathan Hawk.
  * Small changes made and actively maintained.
- *
  * http://forge.libreworks.net/projects/xyster/
- * 
+ *
+ * @todo This component needs to be updated for ZF2.
+ *
  * @category    Drake
  * @package     Drake_Controller
  * @subpackage  Plugins
  * @copyright   Copyright (c) 2008-2010 Rob Zienert (http://robzienert.com)
- * @license     http://www.opensource.org/licenses/bsd-license.php New BSD License
+ * @license     http://github.com/robzienert/Drake/blob/develop/LICENSE New BSD
  */
 class Acl extends \Zend\Controller\Plugin\AbstractHelper
 {

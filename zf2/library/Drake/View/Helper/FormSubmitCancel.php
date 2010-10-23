@@ -18,13 +18,13 @@
 namespace Drake\View\Helper;
 
 /**
- * Adds a simple cancel link next to the form submit button
- *
+ * Adds a simple cancel link next to the form submit button.
+ * 
  * @category    Drake
  * @package     Drake_View
  * @subpackage  Helper
  * @copyright   Copyright (c) 2008-2010 Rob Zienert (http://robzienert.com)
- * @license     http://www.opensource.org/licenses/bsd-license.php New BSD License
+ * @license     http://github.com/robzienert/Drake/blob/develop/LICENSE New BSD
  */
 class FormSubmitCancel extends \Zend\View\Helper\FormSubmit
 {

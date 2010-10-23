@@ -9,7 +9,8 @@
  * at this URL: http://github.com/robzienert/Drake/blob/develop/LICENSE
  *
  * @category    Drake
- * @package     Drake_Application
+ * @package     Drake_View
+ * @subpackage  Helper
  * @copyright   Copyright (c) 2008-2010 Rob Zienert (http://robzienert.com)
  * @license     http://github.com/robzienert/Drake/blob/develop/LICENSE New BSD
  */
@@ -17,15 +18,15 @@
 /**
  * @namespace
  */
-namespace Drake\Application\Resource;
+namespace Drake\View;
 
 /**
  * @category    Drake
- * @package     Drake_Application
- * @subpackage  Resources
+ * @package     Drake_View
+ * @subpackage  Helper
  * @copyright   Copyright (c) 2008-2010 Rob Zienert (http://robzienert.com)
  * @license     http://github.com/robzienert/Drake/blob/develop/LICENSE New BSD
  */
-class RuntimeException extends \RuntimeException implements Exception
+class HelperException extends \Exception implements Exception
 {
 }
