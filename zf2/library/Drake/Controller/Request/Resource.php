@@ -25,8 +25,6 @@ namespace Drake\Controller\Request;
  * Small changes made and actively maintained.
  * http://forge.libreworks.net/projects/xyster/
  *
- * @todo This component needs to be updated for ZF2.
- *
  * @category    Drake
  * @package     Drake_Controller
  * @subpackage  Helpers

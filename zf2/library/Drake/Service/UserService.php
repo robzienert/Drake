@@ -9,7 +9,7 @@
  * at this URL: http://github.com/robzienert/Drake/blob/develop/LICENSE
  *
  * @category    Drake
- * @package     Drake_Search_Lucene
+ * @package     Drake_
  * @copyright   Copyright (c) 2008-2010 Rob Zienert (http://robzienert.com)
  * @license     http://github.com/robzienert/Drake/blob/develop/LICENSE New BSD
  */
@@ -17,30 +17,25 @@
 /**
  * @namespace
  */
-namespace Drake\Search\Lucene;
-
-use \Zend\Search\Lucene\Field;
+namespace Drake\Service;
 
 /**
- * Adds standardized functionality and auto-maintenance of documents.
- * 
+ * Used by ACL components
+ *
  * @category    Drake
- * @package     Drake_Search_Lucene
+ * @package     Drake_Service
  * @copyright   Copyright (c) 2008-2010 Rob Zienert (http://robzienert.com)
  * @license     http://github.com/robzienert/Drake/blob/develop/LICENSE New BSD
  */
-class Document extends \Zend\Search\Lucene\Document
+interface UserService extends Service
 {
     /**
-     * Adds defualt fields to the document
+     * Returns the currently active user for the request.
      *
-     * @param string $class
-     * @param mixed $key
+     * This method must always return an object; such as an AnonymousUser object
+     * that implements \Zend\Acl\Role.
+     *
+     * @return \Zend\Acl\Role
      */
-    public function __construct($class, $key)
-    {
-        $this->addField(Field::keyword('docRef', "{$class}:{$key}"));
-        $this->addField(Field::unIndexed('class', $class));
-        $this->addField(Field::unIndexed('key', $key));
-    }
+    public function getActiveUser();
 }

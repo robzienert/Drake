@@ -31,26 +31,22 @@ abstract class AbstractModel
      * Map a call to set a property to its corresponding mutator if it exists.
      * Otherwise, set the property directly.
      *
-     * Ignore any properties that begin with an underscore so not all of our
-     * protected properties are exposed.
-     *
      * @author Court Ewing <www.epixa.com>
      * @param string $name
      * @param mixed $value
      * @return void
+     * @throws LogicException When the property does not exist
      */
     public function __set($name, $value)
     {
-        if ('_' != $name[0]) {
-            $method = $this->inflectPropertyToMethod($name, 'set');
-            if (method_exists($this, $method)) {
-                return $this->$method($value);
-            }
+        $method = $this->inflectPropertyToMethod($name, 'set');
+        if (method_exists($this, $method)) {
+            return $this->$method($value);
+        }
 
-            if (property_exists($this, $name)) {
-                $this->$name = $value;
-                return;
-            }
+        if (property_exists($this, $name) ) {
+            $this->$name = $value;
+            return;
         }
 
         throw new \LogicException("No property exists by `$name`");
@@ -60,24 +56,20 @@ abstract class AbstractModel
      * Map a call to get a property to its corresponding accessor if it exists.
      * Otherwise, get the property directly.
      *
-     * Ignore any properties that begin with an underscore so not all of our
-     * protected properties are exposed.
-     *
      * @author Court Ewing <www.epixa.com>
      * @param string $name
      * @return mixed
+     * @throws LogicException When the property does not exist
      */
     public function __get($name)
     {
-        if ('_' != $name[0]) {
-            $method = $this->inflectPropertyToMethod($name);
-            if (method_exists($this, $method)) {
-                return $this->$method();
-            }
+        $method = $this->inflectPropertyToMethod($name);
+        if (method_exists($this, $method)) {
+            return $this->$method();
+        }
 
-            if (property_exists($this, $name)) {
-                return $this->$name;
-            }
+        if (property_exists($this, $name)) {
+            return $this->$name;
         }
 
         throw new \LogicException("No property exists by `$name`");

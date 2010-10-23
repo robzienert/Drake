@@ -19,6 +19,8 @@
  */
 namespace Drake\Model;
 
+use Zend\Acl\Acl;
+
 /**
  * @category    Drake
  * @package     Drake_Model
@@ -56,7 +58,7 @@ abstract class AbstractAccessibleModel extends AbstractModel implements \Zend\Ac
      * Intiailize method
      *
      */
-    protected function _init()
+    protected function init()
     {
     }
 
@@ -66,7 +68,7 @@ abstract class AbstractAccessibleModel extends AbstractModel implements \Zend\Ac
      * @param Zend_Acl $acl
      * @return void
      */
-    public function setAcl(\Zend\Acl $acl)
+    public function setAcl(Acl $acl)
     {
         $this->acl = $acl;
         if (!$this->acl->hasResource($this)) {
@@ -100,7 +102,7 @@ abstract class AbstractAccessibleModel extends AbstractModel implements \Zend\Ac
      *
      * @return void
      */
-    protected function _initAcl()
+    protected function initAcl()
     {
     }
 
@@ -158,7 +160,7 @@ abstract class AbstractAccessibleModel extends AbstractModel implements \Zend\Ac
      *
      * @param Zend_Acl $acl
      */
-    public static function setDefaultAcl(\Zend\Acl $acl)
+    public static function setDefaultAcl(Acl $acl)
     {
         self::$defaultAcl = $acl;
     }

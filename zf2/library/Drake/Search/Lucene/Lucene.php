@@ -19,6 +19,12 @@
  */
 namespace Drake\Search\Lucene;
 
+use \Zend\Search\Lucene\Analysis\Analyzer,
+    \Zend\Search\Lucene\Document as ZendDocument,
+    \Zend\Search\Lucene as ZendLucene,
+    \Zend\Search\Lucene\Index\Term,
+    \Zend\Search\Lucene\Proxy;
+
 /**
  * Adds standardized functionality and auto-maintenance of documents.
  *
@@ -38,8 +44,7 @@ class Lucene extends \Zend\Search\Lucene
     public function __construct($directory = null, $create = false)
     {
         parent::__construct($directory, $create);
-        \Zend\Search\Lucene\Analysis\Analyzer::setDefault(
-            new \Zend\Search\Lucene\Analysis\Analyzer\Common\Utf8Num\CaseInsensitive());
+        Analyzer::setDefault(new Analyzer\Common\Utf8Num\CaseInsensitive());
     }
 
     /**
@@ -50,7 +55,7 @@ class Lucene extends \Zend\Search\Lucene
      */
     public static function create($directory)
     {
-        return new \Zend\Search\Lucene\Proxy(new Lucene($directory, true));
+        return new Proxy(new Lucene($directory, true));
     }
 
     /**
@@ -61,7 +66,7 @@ class Lucene extends \Zend\Search\Lucene
      */
     public static function open($directory)
     {
-        return new \Zend\Search\Lucene\Proxy(new Lucene($directory, false));
+        return new Proxy(new Lucene($directory, false));
     }
 
     /**
@@ -71,10 +76,10 @@ class Lucene extends \Zend\Search\Lucene
      *
      * @param Zend_Search_Lucene_Document $document
      */
-    public function addDocument(\Zend\Search\Lucene\Document $document)
+    public function addDocument(ZendDocument $document)
     {
         $docRef = $document->docRef;
-        $term  = new \Zend\Search\Lucene\Index\Term($docRef, 'docRef');
+        $term  = new Term($docRef, 'docRef');
 
         $docIds = $this->termDocs($term);
         foreach ($docIds as $id) {

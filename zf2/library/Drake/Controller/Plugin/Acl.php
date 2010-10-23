@@ -21,16 +21,14 @@
 namespace Drake\Controller\Plugin;
 
 use \Drake\Controller\Request,
-    \Zend\Acl as ZendAcl,
-    \Zend\Auth as ZendAuth,
-    \Zend\Controller\Front as ControllerFront;
+    \Zend\Acl as Acl,
+    \Zend\Authentication\AuthenticationService,
+    \Zend\Controller\Front as FrontController;
 
 /**
  * An ACL package taken heavily from the Xyster Framework by Jonathan Hawk.
  * Small changes made and actively maintained.
  * http://forge.libreworks.net/projects/xyster/
- *
- * @todo This component needs to be updated for ZF2.
  *
  * @category    Drake
  * @package     Drake_Controller
@@ -86,7 +84,7 @@ class Acl extends \Zend\Controller\Plugin\AbstractHelper
      *
      * @param Zend_Acl $acl
      */
-    public function __construct(ZendAcl $acl)
+    public function __construct(Acl $acl)
     {
         $this->setAcl($acl);
     }
@@ -96,7 +94,7 @@ class Acl extends \Zend\Controller\Plugin\AbstractHelper
      *
      * @return void
      */
-    public function setAcl(ZendAcl $acl)
+    public function setAcl(Acl $acl)
     {
         $this->acl = $acl;
     }
@@ -118,16 +116,25 @@ class Acl extends \Zend\Controller\Plugin\AbstractHelper
             $request->getControllerName());
         $privilege = $request->getActionName();
 
-        $container = ControllerFront::getInstance()
+        $container = FrontController::getInstance()
             ->getParam('bootstrap')
             ->getContainer();
 
+        if (!$container->isRegistered('userService')) {
+            return;
+        }
+
         $userService = $container->userService;
+        
+        if (!$userService instanceof \Drake\Service\UserService) {
+            throw new PluginException('The provided User Service does not implement \\Drake\\Service\\UserService');
+        }
+        
         $role = $userService->getActiveUser()->getRoleId();
 
         $isAllowed = $this->acl->isAllowed($role, $resource);
 
-        if (!$isAllowed && !ZendAuth::getInstance()->hasIdentity()) {
+        if (!$isAllowed && !AuthenticationService::getInstance()->hasIdentity()) {
             $this->acl->allow(null,
                 $this->getResource(
                     $this->getLoginModule(),
@@ -145,7 +152,7 @@ class Acl extends \Zend\Controller\Plugin\AbstractHelper
             $message .= $role . ' -> ' . $resource->getResourceId();
 
             $error = new \ArrayObject(array(), \ArrayObject::ARRAY_AS_PROPS);
-            $error->exception = new ZendAcl\AclException($message);
+            $error->exception = new Acl\AclException($message);
             $error->type = 'EXCEPTION_OTHER';
 
             $error->request = clone $request;
@@ -201,7 +208,7 @@ class Acl extends \Zend\Controller\Plugin\AbstractHelper
     public function getAccessDeniedModule()
     {
         if (null === $this->deniedModule) {
-            $this->deniedModule = ControllerFront::getInstance()
+            $this->deniedModule = FrontController::getInstance()
                 ->getDispatcher()
                 ->getDefaultModule();
         }
@@ -236,7 +243,7 @@ class Acl extends \Zend\Controller\Plugin\AbstractHelper
     public function getLoginModule()
     {
         if (null === $this->loginModule) {
-            $this->loginModule = ControllerFront::getInstance()
+            $this->loginModule = FrontController::getInstance()
                 ->getDispatcher()
                 ->getDefaultModule();
         }

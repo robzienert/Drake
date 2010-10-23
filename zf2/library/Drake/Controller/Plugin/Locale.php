@@ -20,13 +20,16 @@
  */
 namespace Drake\Controller\Plugin;
 
+use \Zend\Registry,
+    \Zend\Form\Form;
+
 /**
  * @todo This component needs to be refactored for ZF2.
  *
  * @uses        \Zend\Registry
  * @uses        \Zend\Locale\Locale
  * @uses        \Zend\Translator\Translator
- * @uses        \Zend\Form
+ * @uses        \Zend\Form\Form
  * @category    Drake
  * @package     Drake_Controller
  * @subpackage  Plugins
@@ -44,10 +47,12 @@ class Locale extends \Zend\Controller\Plugin\AbstractHelper
      */
     public function routeShutdown(\Zend\Controller\Request\AbstractHelper $request)
     {
-        $registry = \Zend\Registry::getInstance();
+        $registry = Registry::getInstance();
 
+        /** @var $locale \Zend\Locale\Locale */
+        /** @var $translator \Zend\Translator\Translator */
         $locale = $registry->get('Zend\\Locale\\Locale');
-        $translate = $registry->get('Zend\\Translator\\Translator');
+        $translator = $registry->get('Zend\\Translator\\Translator');
 
         $params = $this->getRequest()->getParams();
         $localeParam = isset($params['lang']) ? $param['lang'] : false;
@@ -56,15 +61,15 @@ class Locale extends \Zend\Controller\Plugin\AbstractHelper
             $localeParam = $locale->getLanguage();
         }
 
-        if (!$translate->isAvailable($localeParam)) {
+        if (!$translator->isAvailable($localeParam)) {
             $localeParam = 'en';
             $this->getRequest()->setParam('lang', 'en');
         }
 
         $locale->setLocale($localeParam);
-        $translate->setLocale($locale);
+        $translator->setLocale($locale);
 
-        \Zend\Form::setDefaultTranslator($translate);
+        Form::setDefaultTranslator($translator);
 
         setcookie('lang', $locale->getLanguage(), null, '/');
     }

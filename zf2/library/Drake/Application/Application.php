@@ -79,8 +79,8 @@ class Application extends \Zend\Application\Application
             ? $this->cacheOptions['backendOptions']
             : array();
 
-        require_once 'Zend/Cache.php';
-        $cache = \Zend\Cache::factory(
+        require_once 'Zend/Cache/Cache.php';
+        $cache = \Zend\Cache\Cache::factory(
             $frontendType,
             $backendType,
             array_merge(array(
@@ -92,7 +92,7 @@ class Application extends \Zend\Application\Application
             ), $backendOptions)
         );
 
-        $cacheId = 'Zend_Application_Config_' . APPLICATION_ENV;
+        $cacheId = crc32($file) . APPLICATION_ENV;
 
         $config = $cache->load($cacheId);
         if (!$config) {

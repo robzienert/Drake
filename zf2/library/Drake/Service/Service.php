@@ -9,9 +9,9 @@
  * at this URL: http://github.com/robzienert/Drake/blob/develop/LICENSE
  *
  * @category    Drake
- * @package     Drake_
+ * @package     Drake_Service
  * @copyright   Copyright (c) 2008-2010 Rob Zienert (http://robzienert.com)
- * @license     http://github.com/robzienert/Drake/blob/develop/LICENSE New BSD License
+ * @license     http://github.com/robzienert/Drake/blob/develop/LICENSE New BSD
  */
 
 /**
@@ -25,18 +25,57 @@ namespace Drake\Service;
  *
  * Finder methods should start with 'find', 'findAll', 'findBy', 'findOne',
  * and so-on.
+ *
+ * @category    Drake
+ * @package     Drake_Service
+ * @copyright   Copyright (c) 2008-2010 Rob Zienert (http://robzienert.com)
+ * @license     http://github.com/robzienert/Drake/blob/develop/LICENSE New BSD
  */
 interface Service
 {
-    public function setDao(Drake\Dao\Dao $dao);
+    /**
+     * Set the DAO object.
+     *
+     * @param <type> $dao
+     * @return void
+     */
+    public function setDao($dao);
 
+    /**
+     * Get the DAO object
+     *
+     * @return <type> $dao
+     */
     public function getDao();
 
+    /**
+     * Create a new entity
+     *
+     * @param <type> $entity
+     * @return void
+     */
     public function create($entity);
 
+    /**
+     * Update the provided entity
+     *
+     * @param <type> $entity
+     * @return void
+     */
     public function update($entity);
 
+    /**
+     * Delete the provided entity
+     *
+     * @param <type> $entity
+     * @return void
+     */
     public function delete($entity);
 
+    /**
+     * Commits all changes
+     *
+     * @return void
+     */
     public function flush();
 }

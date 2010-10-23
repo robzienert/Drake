@@ -50,7 +50,7 @@ class Doctrine2 implements \Zend\Paginator\Adapter
      * Construct
      *
      * @param \Doctrine\ORM\QueryBuilder $qb
-     * @param <type> $countColumn
+     * @param string $countColumn
      */
     public function __construct(\Doctrine\ORM\QueryBuilder $qb, $countColumn = 'id')
     {
