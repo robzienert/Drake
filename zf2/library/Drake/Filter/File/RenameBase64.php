@@ -95,7 +95,7 @@ class RenameBase64 extends \Zend\Filter\File\Rename
     protected function _encodeBase64($string)
     {
         $base64 = base64_encode($string);
-        $base64Url = strtr($base64, '+/=', '-_,');
+        $base64Url = strtr($base64, '+/=', ',_-');
         return $base64Url;
     }
        /**

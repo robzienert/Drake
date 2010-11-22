@@ -35,7 +35,7 @@ class Slug extends \Zend\Filter\AbstractFilter
      */
     public function filter($value)
     {
-        $value = \Drake\Util\StringInflector::sluggify($value);
+        $value = \Drake\Stdlib\StringInflector::sluggify($value);
         return $value;
     }
 }
